@@ -1,0 +1,357 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A15FBD7A18F259A50028CDAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A15FBD7918F259A50028CDAE /* Foundation.framework */; };
+		A15FBD7C18F259A50028CDAE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A15FBD7B18F259A50028CDAE /* CoreGraphics.framework */; };
+		A15FBD7E18F259A50028CDAE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A15FBD7D18F259A50028CDAE /* UIKit.framework */; };
+		A15FBD8418F259A50028CDAE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A15FBD8218F259A50028CDAE /* InfoPlist.strings */; };
+		A15FBD8618F259A50028CDAE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FBD8518F259A50028CDAE /* main.m */; };
+		A15FBD8A18F259A50028CDAE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FBD8918F259A50028CDAE /* AppDelegate.m */; };
+		A15FBD8D18F259A50028CDAE /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A15FBD8B18F259A50028CDAE /* Main_iPhone.storyboard */; };
+		A15FBD9018F259A50028CDAE /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A15FBD8E18F259A50028CDAE /* Main_iPad.storyboard */; };
+		A15FBD9318F259A50028CDAE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FBD9218F259A50028CDAE /* ViewController.m */; };
+		A15FBD9518F259A50028CDAE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A15FBD9418F259A50028CDAE /* Images.xcassets */; };
+		A15FBDB618F25A970028CDAE /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDB218F25A970028CDAE /* EAGLView.m */; };
+		A15FBDB718F25A970028CDAE /* ES1Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDB418F25A970028CDAE /* ES1Renderer.m */; };
+		A15FBDBD18F2867F0028CDAE /* GameController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDBC18F2867F0028CDAE /* GameController.mm */; };
+		A15FBDC018F289960028CDAE /* GameApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDBE18F289960028CDAE /* GameApplication.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A15FBD7618F259A50028CDAE /* asteroids.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = asteroids.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A15FBD7918F259A50028CDAE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A15FBD7B18F259A50028CDAE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A15FBD7D18F259A50028CDAE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A15FBD8118F259A50028CDAE /* asteroids-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "asteroids-Info.plist"; sourceTree = "<group>"; };
+		A15FBD8318F259A50028CDAE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A15FBD8518F259A50028CDAE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A15FBD8718F259A50028CDAE /* asteroids-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "asteroids-Prefix.pch"; sourceTree = "<group>"; };
+		A15FBD8818F259A50028CDAE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A15FBD8918F259A50028CDAE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A15FBD8C18F259A50028CDAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		A15FBD8F18F259A50028CDAE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		A15FBD9118F259A50028CDAE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		A15FBD9218F259A50028CDAE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A15FBD9418F259A50028CDAE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A15FBDB118F25A970028CDAE /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
+		A15FBDB218F25A970028CDAE /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
+		A15FBDB318F25A970028CDAE /* ES1Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES1Renderer.h; sourceTree = "<group>"; };
+		A15FBDB418F25A970028CDAE /* ES1Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES1Renderer.m; sourceTree = "<group>"; };
+		A15FBDB518F25A970028CDAE /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
+		A15FBDBB18F2867F0028CDAE /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
+		A15FBDBC18F2867F0028CDAE /* GameController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameController.mm; sourceTree = "<group>"; };
+		A15FBDBE18F289960028CDAE /* GameApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameApplication.cpp; sourceTree = "<group>"; };
+		A15FBDBF18F289960028CDAE /* GameApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameApplication.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A15FBD7318F259A50028CDAE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A15FBD7C18F259A50028CDAE /* CoreGraphics.framework in Frameworks */,
+				A15FBD7E18F259A50028CDAE /* UIKit.framework in Frameworks */,
+				A15FBD7A18F259A50028CDAE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A15FBD6D18F259A50028CDAE = {
+			isa = PBXGroup;
+			children = (
+				A15FBD7F18F259A50028CDAE /* asteroids */,
+				A15FBD7818F259A50028CDAE /* Frameworks */,
+				A15FBD7718F259A50028CDAE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A15FBD7718F259A50028CDAE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A15FBD7618F259A50028CDAE /* asteroids.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A15FBD7818F259A50028CDAE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A15FBD7918F259A50028CDAE /* Foundation.framework */,
+				A15FBD7B18F259A50028CDAE /* CoreGraphics.framework */,
+				A15FBD7D18F259A50028CDAE /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A15FBD7F18F259A50028CDAE /* asteroids */ = {
+			isa = PBXGroup;
+			children = (
+				A15FBDBF18F289960028CDAE /* GameApplication.h */,
+				A15FBDBE18F289960028CDAE /* GameApplication.cpp */,
+				A15FBDBB18F2867F0028CDAE /* GameController.h */,
+				A15FBDBC18F2867F0028CDAE /* GameController.mm */,
+				A15FBDB118F25A970028CDAE /* EAGLView.h */,
+				A15FBDB218F25A970028CDAE /* EAGLView.m */,
+				A15FBDB318F25A970028CDAE /* ES1Renderer.h */,
+				A15FBDB418F25A970028CDAE /* ES1Renderer.m */,
+				A15FBDB518F25A970028CDAE /* ESRenderer.h */,
+				A15FBD8818F259A50028CDAE /* AppDelegate.h */,
+				A15FBD8918F259A50028CDAE /* AppDelegate.m */,
+				A15FBD8B18F259A50028CDAE /* Main_iPhone.storyboard */,
+				A15FBD8E18F259A50028CDAE /* Main_iPad.storyboard */,
+				A15FBD9118F259A50028CDAE /* ViewController.h */,
+				A15FBD9218F259A50028CDAE /* ViewController.m */,
+				A15FBD9418F259A50028CDAE /* Images.xcassets */,
+				A15FBD8018F259A50028CDAE /* Supporting Files */,
+			);
+			path = asteroids;
+			sourceTree = "<group>";
+		};
+		A15FBD8018F259A50028CDAE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A15FBD8118F259A50028CDAE /* asteroids-Info.plist */,
+				A15FBD8218F259A50028CDAE /* InfoPlist.strings */,
+				A15FBD8518F259A50028CDAE /* main.m */,
+				A15FBD8718F259A50028CDAE /* asteroids-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A15FBD7518F259A50028CDAE /* asteroids */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A15FBDAB18F259A60028CDAE /* Build configuration list for PBXNativeTarget "asteroids" */;
+			buildPhases = (
+				A15FBD7218F259A50028CDAE /* Sources */,
+				A15FBD7318F259A50028CDAE /* Frameworks */,
+				A15FBD7418F259A50028CDAE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = asteroids;
+			productName = asteroids;
+			productReference = A15FBD7618F259A50028CDAE /* asteroids.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A15FBD6E18F259A50028CDAE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = andy;
+			};
+			buildConfigurationList = A15FBD7118F259A50028CDAE /* Build configuration list for PBXProject "asteroids" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A15FBD6D18F259A50028CDAE;
+			productRefGroup = A15FBD7718F259A50028CDAE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A15FBD7518F259A50028CDAE /* asteroids */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A15FBD7418F259A50028CDAE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A15FBD9018F259A50028CDAE /* Main_iPad.storyboard in Resources */,
+				A15FBD9518F259A50028CDAE /* Images.xcassets in Resources */,
+				A15FBD8D18F259A50028CDAE /* Main_iPhone.storyboard in Resources */,
+				A15FBD8418F259A50028CDAE /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A15FBD7218F259A50028CDAE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A15FBD9318F259A50028CDAE /* ViewController.m in Sources */,
+				A15FBDB718F25A970028CDAE /* ES1Renderer.m in Sources */,
+				A15FBDB618F25A970028CDAE /* EAGLView.m in Sources */,
+				A15FBDC018F289960028CDAE /* GameApplication.cpp in Sources */,
+				A15FBDBD18F2867F0028CDAE /* GameController.mm in Sources */,
+				A15FBD8A18F259A50028CDAE /* AppDelegate.m in Sources */,
+				A15FBD8618F259A50028CDAE /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A15FBD8218F259A50028CDAE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A15FBD8318F259A50028CDAE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A15FBD8B18F259A50028CDAE /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A15FBD8C18F259A50028CDAE /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		A15FBD8E18F259A50028CDAE /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A15FBD8F18F259A50028CDAE /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A15FBDA918F259A60028CDAE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A15FBDAA18F259A60028CDAE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A15FBDAC18F259A60028CDAE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "asteroids/asteroids-Prefix.pch";
+				INFOPLIST_FILE = "asteroids/asteroids-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A15FBDAD18F259A60028CDAE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "asteroids/asteroids-Prefix.pch";
+				INFOPLIST_FILE = "asteroids/asteroids-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A15FBD7118F259A50028CDAE /* Build configuration list for PBXProject "asteroids" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A15FBDA918F259A60028CDAE /* Debug */,
+				A15FBDAA18F259A60028CDAE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A15FBDAB18F259A60028CDAE /* Build configuration list for PBXNativeTarget "asteroids" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A15FBDAC18F259A60028CDAE /* Debug */,
+				A15FBDAD18F259A60028CDAE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A15FBD6E18F259A50028CDAE /* Project object */;
+}
