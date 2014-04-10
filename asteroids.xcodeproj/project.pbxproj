@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A12CEF8018F406B90017651C /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = A12CEF7E18F406B90017651C /* Player.m */; };
 		A15FBD7A18F259A50028CDAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A15FBD7918F259A50028CDAE /* Foundation.framework */; };
 		A15FBD7C18F259A50028CDAE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A15FBD7B18F259A50028CDAE /* CoreGraphics.framework */; };
 		A15FBD7E18F259A50028CDAE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A15FBD7D18F259A50028CDAE /* UIKit.framework */; };
@@ -19,11 +20,13 @@
 		A15FBD9518F259A50028CDAE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A15FBD9418F259A50028CDAE /* Images.xcassets */; };
 		A15FBDB618F25A970028CDAE /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDB218F25A970028CDAE /* EAGLView.m */; };
 		A15FBDB718F25A970028CDAE /* ES1Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDB418F25A970028CDAE /* ES1Renderer.m */; };
-		A15FBDBD18F2867F0028CDAE /* GameController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDBC18F2867F0028CDAE /* GameController.mm */; };
-		A15FBDC018F289960028CDAE /* GameApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDBE18F289960028CDAE /* GameApplication.cpp */; };
+		A15FBDC018F289960028CDAE /* GameApp.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDBE18F289960028CDAE /* GameApp.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A10D2A5018F43A2F00BE6CE6 /* Misc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Misc.h; sourceTree = "<group>"; };
+		A12CEF7E18F406B90017651C /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		A12CEF7F18F406B90017651C /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		A15FBD7618F259A50028CDAE /* asteroids.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = asteroids.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A15FBD7918F259A50028CDAE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A15FBD7B18F259A50028CDAE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -44,10 +47,8 @@
 		A15FBDB318F25A970028CDAE /* ES1Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES1Renderer.h; sourceTree = "<group>"; };
 		A15FBDB418F25A970028CDAE /* ES1Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES1Renderer.m; sourceTree = "<group>"; };
 		A15FBDB518F25A970028CDAE /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
-		A15FBDBB18F2867F0028CDAE /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
-		A15FBDBC18F2867F0028CDAE /* GameController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameController.mm; sourceTree = "<group>"; };
-		A15FBDBE18F289960028CDAE /* GameApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameApplication.cpp; sourceTree = "<group>"; };
-		A15FBDBF18F289960028CDAE /* GameApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameApplication.h; sourceTree = "<group>"; };
+		A15FBDBE18F289960028CDAE /* GameApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameApp.m; sourceTree = "<group>"; };
+		A15FBDBF18F289960028CDAE /* GameApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameApp.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,10 +95,11 @@
 		A15FBD7F18F259A50028CDAE /* asteroids */ = {
 			isa = PBXGroup;
 			children = (
-				A15FBDBF18F289960028CDAE /* GameApplication.h */,
-				A15FBDBE18F289960028CDAE /* GameApplication.cpp */,
-				A15FBDBB18F2867F0028CDAE /* GameController.h */,
-				A15FBDBC18F2867F0028CDAE /* GameController.mm */,
+				A10D2A5018F43A2F00BE6CE6 /* Misc.h */,
+				A12CEF7F18F406B90017651C /* Player.h */,
+				A12CEF7E18F406B90017651C /* Player.m */,
+				A15FBDBF18F289960028CDAE /* GameApp.h */,
+				A15FBDBE18F289960028CDAE /* GameApp.m */,
 				A15FBDB118F25A970028CDAE /* EAGLView.h */,
 				A15FBDB218F25A970028CDAE /* EAGLView.m */,
 				A15FBDB318F25A970028CDAE /* ES1Renderer.h */,
@@ -192,11 +194,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A12CEF8018F406B90017651C /* Player.m in Sources */,
 				A15FBD9318F259A50028CDAE /* ViewController.m in Sources */,
 				A15FBDB718F25A970028CDAE /* ES1Renderer.m in Sources */,
 				A15FBDB618F25A970028CDAE /* EAGLView.m in Sources */,
-				A15FBDC018F289960028CDAE /* GameApplication.cpp in Sources */,
-				A15FBDBD18F2867F0028CDAE /* GameController.mm in Sources */,
+				A15FBDC018F289960028CDAE /* GameApp.m in Sources */,
 				A15FBD8A18F259A50028CDAE /* AppDelegate.m in Sources */,
 				A15FBD8618F259A50028CDAE /* main.m in Sources */,
 			);

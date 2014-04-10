@@ -1,13 +1,15 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+
 #import "ESRenderer.h"
 
-@class GameController;
+@class GameApp;
 
 // This class wraps the CAEAGLLayer from CoreAnimation into a convenient UIView subclass.
 // The view content is basically an EAGL surface you render your OpenGL scene into.
 // Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
-@interface EAGLView : UIView {    
+@interface EAGLView : UIView
+{
 	id <ESRenderer> renderer;
 	BOOL animating;
 	NSInteger animationFrameInterval;
@@ -17,7 +19,8 @@
 	// isn't available.
 	id displayLink;
     CFTimeInterval lastTime;
-    GameController * gameApp;
+    
+    GameApp * gameApp;
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;

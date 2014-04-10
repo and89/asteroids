@@ -1,8 +1,23 @@
 #import "EAGLView.h"
 #import "ES1Renderer.h"
-#import "GameController.h"
+#import "GameApp.h"
+
+@interface EAGLView (Private)
+
+- (void)gameLoop;
+
+@end
 
 @implementation EAGLView
+{
+    CGFloat maximumFrameRate;
+    CGFloat minimumFrameRate;
+    CGFloat updateInterval;
+    CGFloat maxCyclesPerFrame;
+    
+    double lastFrameTime;
+    double cyclesLeftOver;
+}
 
 @synthesize animating;
 @dynamic animationFrameInterval;
@@ -34,7 +49,15 @@
 		animationFrameInterval = 1;
 		displayLink = nil;
         
-        gameApp = [GameController sharedController];
+        maximumFrameRate = 60.0f;
+        minimumFrameRate = 10.0f;
+        updateInterval = 1.0 / maximumFrameRate;
+        maxCyclesPerFrame = maximumFrameRate / minimumFrameRate;
+        
+        lastFrameTime = 0.0;
+        cyclesLeftOver = 0.0;
+        
+        gameApp = [GameApp sharedGameApp];
     }
     
     return self;
@@ -42,19 +65,28 @@
 
 - (void)gameLoop
 {
-    CFTimeInterval time;
-    float delta;
+    double currentTime;
+    double updateIterations;
     
-    time = CFAbsoluteTimeGetCurrent();
-    delta = (time - lastTime);
+    // Apple advises to use CACurrentMediaTime() as CFAbsoluteTimeGetCurrent() is synced with the mobile
+	// network time and so could change causing hiccups.
+    currentTime = CACurrentMediaTime();
+    updateIterations = ((currentTime - lastFrameTime) + cyclesLeftOver);
     
-    while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.002, NO) == kCFRunLoopRunHandledSource);
+    if(updateIterations > (maxCyclesPerFrame * updateInterval))
+        updateIterations = maxCyclesPerFrame * updateInterval;
     
-    [gameApp Update:delta];
+    while(updateIterations >= updateInterval)
+    {
+        updateIterations -= updateInterval;
+        
+        [gameApp update:updateInterval];
+    }
+    
+    cyclesLeftOver = updateIterations;
+    lastFrameTime = currentTime;
     
     [self drawView:nil];
-    
-    lastTime = time;
 }
 
 - (void) drawView:(id)sender
@@ -117,14 +149,41 @@
 	{
         [displayLink invalidate];
         displayLink = nil;
-		
 		animating = FALSE;
 	}
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch * touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
+    [gameApp touchesBegan:location];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch * touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
+    [gameApp touchesMoved:location];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch * touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
+    [gameApp touchesEnd:location];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
 }
 
 - (void) dealloc
 {
     renderer = nil;
+    
+    gameApp = nil;
 }
 
 @end

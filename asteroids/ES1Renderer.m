@@ -1,10 +1,5 @@
 #import "ES1Renderer.h"
-#import "GameController.h"
-
-@interface ES1Renderer (Private)
-// Initialize OpenGL
-- (void)initOpenGL;
-@end
+#import "GameApp.h"
 
 @implementation ES1Renderer
 
@@ -27,7 +22,7 @@
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
         
-        sharedGameController = [GameController sharedController];
+        gameApp = [GameApp sharedGameApp];
 	}
 	
 	return self;
@@ -38,7 +33,7 @@
     // Clear the color buffer which clears the screen
     glClear(GL_COLOR_BUFFER_BIT);
     
-    [sharedGameController Render];
+    [gameApp draw];
     
 	// Present the renderbuffer to the screen
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];
@@ -58,6 +53,8 @@
         return NO;
     }
     
+    [gameApp setScreenSize:CGSizeMake(backingWidth, backingHeight)];
+    
     // Initialize OpenGL now that the necessary buffers have been created and bound
 	[self initOpenGL];
     
@@ -72,23 +69,16 @@
 		glDeleteFramebuffersOES(1, &defaultFramebuffer);
 		defaultFramebuffer = 0;
 	}
-
 	if (colorRenderbuffer)
 	{
 		glDeleteRenderbuffersOES(1, &colorRenderbuffer);
 		colorRenderbuffer = 0;
 	}
-	
 	// Tear down context
 	if ([EAGLContext currentContext] == context)
         [EAGLContext setCurrentContext:nil];
-	
 	context = nil;
 }
-
-@end
-
-@implementation ES1Renderer (Private)
 
 - (void)initOpenGL
 {
@@ -105,6 +95,8 @@
 	glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
+    //glTranslatef(-backingWidth/2.0f, -backingHeight/2.0f, 0.0f);
+    
 	// Set the colour to use when clearing the screen with glClear
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     
@@ -115,7 +107,7 @@
     
     // Enable the OpenGL states we are going to be using when rendering
     glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
+    //glEnableClientState(GL_COLOR_ARRAY);
 }
 
 @end

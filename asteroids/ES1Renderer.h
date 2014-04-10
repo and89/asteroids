@@ -2,7 +2,7 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-@class GameController;
+@class GameApp;
 
 @interface ES1Renderer : NSObject <ESRenderer>
 {
@@ -15,7 +15,7 @@
 	// The OpenGL names for the framebuffer and renderbuffer used to render to this view
 	GLuint defaultFramebuffer, colorRenderbuffer;
     
-    GameController * sharedGameController;
+    GameApp * gameApp;
 }
 
 - (void) render;
