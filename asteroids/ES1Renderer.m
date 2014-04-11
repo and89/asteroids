@@ -107,7 +107,7 @@
     
     // Enable the OpenGL states we are going to be using when rendering
     glEnableClientState(GL_VERTEX_ARRAY);
-    //glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
 }
 
 @end
