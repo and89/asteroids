@@ -2,6 +2,10 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
+@class Player;
+@class Bullet;
+@class Asteroid;
+
 @class GameApp;
 
 @interface ES1Renderer : NSObject <ESRenderer>
@@ -18,7 +22,7 @@
     GameApp * gameApp;
 }
 
-- (void) render;
-- (BOOL) resizeFromLayer:(CAEAGLLayer *)layer;
+- (void)render;
+- (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;
 
 @end

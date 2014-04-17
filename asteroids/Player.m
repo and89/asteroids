@@ -1,43 +1,73 @@
 #import "Player.h"
+#import "Bullets.h"
+#import "GameApp.h"
 #import "Misc.h"
 #import <OpenGLES/ES1/gl.h>
 
 @implementation Player
 {
+    /* Current pos if ship */
     CGPoint pos;
-    CGPoint scale;
+    
+    /* Size */
+    CGSize size;
+    
+    /* where to go */
     CGPoint target;
+    
+    CGVector speed;
+    CGFloat speedDelta;
+    
+    /* Speed */
     CGFloat velocity;
+    
+    /* Current angle */
     CGFloat angle;
+    
     CGFloat acceleration;
     CGFloat deceleration;
+    
     BOOL needMove;
+    
+    CGPoint startPos;
+    BOOL isMove;
+    
+    CGSize screenSize;
+    
+    Bullets * bullets;
 }
 
-- (id)init
+- (id)initWithScreenSize:(CGSize)scrSize
 {
     if(self = [super init])
     {
         pos = CGPointMake(284, 160);
-        scale = CGPointMake(10.0f, 10.0f);
+        size = CGSizeMake(10.0f, 10.0f);
+        speed = CGVectorMake(0.0f, 0.0f);
+        speedDelta = 0.9;
         target = CGPointZero;
         velocity = 0.1f;
         angle = 0.0f;
-        acceleration = 0.01f;
-        deceleration = 3.0f;
+        acceleration = 0.008f;
+        deceleration = 1.5f;
         needMove = NO;
+        isMove = NO;
+        screenSize = scrSize;
+        bullets = [[Bullets alloc] init];
     }
     return self;
 }
 
 - (void)update:(CGFloat)delta
 {
+    [bullets update:delta];
+    
     if(!needMove)
         return;
     
     float deltaX = target.x - pos.x;
     float deltaY = target.y - pos.y;
-    float dist = distance(deltaX, deltaY);
+    float dist = DISTANCE(deltaX, deltaY);
     
     if(dist > 1.0f)
     {
@@ -61,34 +91,52 @@
     pos.x = pos.x + deltaX * velocity;
     pos.y = pos.y + deltaY * velocity;
     
-    //if(distance(target.x, pos.x) < 0.01f && distance(target.y, pos.y) < 0.01f)
-    //{
-        //pos.x = target.x;
-        //pos.y = target.y;
-        //needMove = NO;
-    //}
+    if(fabsf(target.x - pos.x) < 0.1f && fabsf(target.y - pos.y) < 0.1f)
+    {
+        pos.x = target.x;
+        pos.y = target.y;
+        needMove = NO;
+    }
+    
+}
+
+- (CGPoint)getPos
+{
+    return pos;
+}
+
+- (CGSize)getSize
+{
+    return size;
+}
+
+- (CGFloat)getAngle
+{
+    return angle;
 }
 
 - (void)draw
 {
+    [bullets draw];
+    
     static const int corners = 3;
     
     static const GLfloat vertices[corners * 2] = {
         -1.0f, -1.0f,
-        0.0f, 2.0f,
+        0.0f, 1.0f,
         1.0f, -1.0f,
     };
     
     static const GLubyte colors[corners * 2 * 4] = {
-        50, 50, 255, 255,
-        50, 50, 255, 255,
-        50, 50, 255, 255,
+        200, 50, 50, 255,
+        200, 200, 50, 255,
+        200, 50, 50, 255,
     };
     
     static const GLubyte indices[corners] = {
         0, 1, 2
     };
-
+    
     glPushMatrix();
     
     glMatrixMode(GL_MODELVIEW);
@@ -96,7 +144,7 @@
     
     glTranslatef(pos.x, pos.y, 0.0f);
     glRotatef(angle, 0.0f, 0.0f, 1.0f);
-    glScalef(scale.x, scale.y, 1.0f);
+    glScalef(size.width, size.height, 1.0f);
     
     glVertexPointer(2, GL_FLOAT, 0, vertices);
     glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
@@ -108,19 +156,35 @@
 
 - (void)touchesBegan:(CGPoint)location
 {
+    if(isMove)
+        return;
     
+    startPos = location;
 }
 
 - (void)touchesMoved:(CGPoint)location
 {
-    
+    isMove = YES;
 }
 
 - (void)touchesEnd:(CGPoint)location
 {
-    target.x = location.x;
-    target.y = location.y;
-    needMove = true;
+    if(isMove)
+    {
+        float deltaX = location.x - startPos.x;
+        float deltaY = location.y - startPos.y;
+        
+        target.x = pos.x + deltaX;
+        target.y = pos.y + deltaY;
+        
+        needMove = YES;
+        
+        isMove = NO;
+    }
+    else
+    {
+        [bullets addBullet:CGPointMake(pos.x, pos.y) andAngle:-angle];
+    }
 }
 
 @end

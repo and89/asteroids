@@ -1,5 +1,7 @@
 #include "Player.h"
 
+@class ES1Renderer;
+
 @interface GameApp : NSObject
 
 + (id)sharedGameApp;
@@ -14,6 +16,7 @@
 - (void)touchesMoved:(CGPoint)location;
 - (void)touchesEnd:(CGPoint)location;
 
+/* Adapt coordinate */
 - (CGPoint)adjustTouchOrientationForTouch:(CGPoint)aTouch;
 
 @end

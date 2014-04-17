@@ -1,15 +1,25 @@
 #import "GameApp.h"
 #import "Player.h"
+#import "Asteroids.h"
+#import "ES1Renderer.h"
 #include <dispatch/dispatch.h>
 
 @implementation GameApp
 {
     Player * player;
     
-    NSUInteger screenWidth;
-    NSUInteger screenHeight;
+    Asteroids * asteroids;
     
-    UIInterfaceOrientation interfaceOrientation;
+    CGSize screenSize;
+    
+    /* Position where user start touch */
+    CGPoint startPoint;
+    
+    /* Position of touch when user move finger on the screen */
+    CGPoint currentPoint;
+    
+    /* Time when user began touch */
+    CGFloat currentTime;
 }
 
 + (id)sharedGameApp
@@ -27,19 +37,13 @@
 
 - (id)init
 {
-    return [self initWidthScreenWidth:480 andHeight:320];
-}
-
-- (id)initWidthScreenWidth:(NSUInteger)w andHeight:(NSUInteger)h
-{
     if(self = [super init])
     {
-        screenWidth = w;
-        screenHeight = h;
+        screenSize = CGSizeMake(480, 320);
         
-        player = [[Player alloc] init];
+        player = [[Player alloc] initWithScreenSize:screenSize];
         
-        interfaceOrientation = UIInterfaceOrientationLandscapeRight;
+        asteroids = [[Asteroids alloc] init];
     }
     
     return self;
@@ -47,42 +51,37 @@
 
 - (CGSize)getScreenSize
 {
-    return CGSizeMake(screenWidth, screenHeight);
+    return screenSize;
 }
 
 - (void)setScreenSize:(CGSize)newSize
 {
-    screenWidth = newSize.width;
-    screenHeight = newSize.height;
+    screenSize = newSize;
 }
 
 - (void)update:(CGFloat)delta
 {
+    //[asteroids update:delta];
+    
     [player update:delta];
 }
 
 - (void)draw
 {
+    //[asteroids draw];
+    
     [player draw];
 }
 
 - (CGPoint)adjustTouchOrientationForTouch:(CGPoint)aTouch
 {
 	CGPoint touchLocation;
-	
-	/*if (interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-    {
-		touchLocation.x = aTouch.y;
-		touchLocation.y = aTouch.x;
-	}
-	else if (interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
-    {
-		touchLocation.x = 480 - aTouch.y;
-		touchLocation.y = 320 - aTouch.x;
-	}*/
     touchLocation.x = aTouch.x;
-	touchLocation.y = screenHeight - aTouch.y;
-    NSLog(@"location: %f,%f", touchLocation.x, touchLocation.y);
+	touchLocation.y = screenSize.height - aTouch.y;
+    
+#ifdef DEBUG
+    //NSLog(@"tap location: %f,%f", touchLocation.x, touchLocation.y);
+#endif
 	
 	return touchLocation;
 }
@@ -95,7 +94,8 @@
 
 - (void)touchesMoved:(CGPoint)location
 {
-    
+    CGPoint loc = [self adjustTouchOrientationForTouch:location];
+    [player touchesMoved:loc];
 }
 
 - (void)touchesEnd:(CGPoint)location

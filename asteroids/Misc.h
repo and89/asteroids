@@ -1,9 +1,13 @@
-#import <OpenGLES/ES1/gl.h>
+#ifndef MISC_H
+#define MISC_H
+
 #include <math.h>
 
+#define DISTANCE(__A__, __B__) (sqrt((__A__) * (__A__) + (__B__) * (__B__)))
 
-float distance(float _a, float _b)
-{
-    return sqrt(_a*_a + _b*_b);
-}
+#define DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0 * M_PI)
 
+#define RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 180.0 / M_PI)
+
+
+#endif
