@@ -20,6 +20,11 @@
     
     /* Time when user began touch */
     CGFloat currentTime;
+    
+    NSInteger marginLeft;
+    NSInteger marginRight;
+    NSInteger marginTop;
+    NSInteger marginBottom;
 }
 
 + (id)sharedGameApp
@@ -41,12 +46,25 @@
     {
         screenSize = CGSizeMake(480, 320);
         
-        player = [[Player alloc] initWithScreenSize:screenSize];
+        marginLeft = 30;
+        marginRight = 30;
+        marginTop = 30;
+        marginBottom = 30;
+        
+        player = [[Player alloc] init];
         
         asteroids = [[Asteroids alloc] init];
+        
+        srandomdev();
     }
     
     return self;
+}
+
+- (CGRect)getFieldRect
+{
+    CGRect rect = CGRectMake(-marginLeft, -marginBottom, screenSize.width + marginRight, screenSize.height + marginTop);
+    return rect;
 }
 
 - (CGSize)getScreenSize
@@ -61,16 +79,18 @@
 
 - (void)update:(CGFloat)delta
 {
-    //[asteroids update:delta];
+    [asteroids update:delta];
     
     [player update:delta];
 }
 
-- (void)draw
+- (void)draw:(ES1Renderer *)renderer
 {
-    //[asteroids draw];
+    [asteroids draw:renderer];
     
-    [player draw];
+    [player draw:renderer];
+    
+    [renderer renderRect:[self getFieldRect]];
 }
 
 - (CGPoint)adjustTouchOrientationForTouch:(CGPoint)aTouch

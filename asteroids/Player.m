@@ -1,8 +1,9 @@
 #import "Player.h"
 #import "Bullets.h"
+#import "Asteroid.h"
 #import "GameApp.h"
 #import "Misc.h"
-#import <OpenGLES/ES1/gl.h>
+#import "ES1Renderer.h"
 
 @implementation Player
 {
@@ -32,12 +33,10 @@
     CGPoint startPos;
     BOOL isMove;
     
-    CGSize screenSize;
-    
     Bullets * bullets;
 }
 
-- (id)initWithScreenSize:(CGSize)scrSize
+- (id)init
 {
     if(self = [super init])
     {
@@ -46,13 +45,12 @@
         speed = CGVectorMake(0.0f, 0.0f);
         speedDelta = 0.9;
         target = CGPointZero;
-        velocity = 0.1f;
+        velocity = 0.05f;
         angle = 0.0f;
         acceleration = 0.008f;
         deceleration = 1.5f;
         needMove = NO;
         isMove = NO;
-        screenSize = scrSize;
         bullets = [[Bullets alloc] init];
     }
     return self;
@@ -83,13 +81,25 @@
         pos.y = pos.y + deltaY * velocity;
         deltaX /= dist;
         deltaY /= dist;
-        angle = acosf(deltaX) / M_PI * 180.0f;
+        angle = RADIANS_TO_DEGREES(acosf(deltaX));
         if(deltaY < 0.0)
             angle *= -1.0f;
         angle -= 90.0f;
     }
+    
+    CGSize screenSize = [[GameApp sharedGameApp] getScreenSize];
+    
     pos.x = pos.x + deltaX * velocity;
     pos.y = pos.y + deltaY * velocity;
+    
+    if(pos.x > screenSize.width)
+        pos.x = 0.0f;
+    if(pos.x < 0)
+        pos.x = screenSize.width;
+    if(pos.y > screenSize.height)
+        pos.y = 0.0f;
+    if(pos.y < 0)
+        pos.y = screenSize.height;
     
     if(fabsf(target.x - pos.x) < 0.1f && fabsf(target.y - pos.y) < 0.1f)
     {
@@ -115,43 +125,33 @@
     return angle;
 }
 
-- (void)draw
+- (AABB)getAABB
 {
-    [bullets draw];
+    AABB aabb;
+    aabb.c = pos;
+    aabb.r = MAX(size.width, size.height);
+    return aabb;
+}
+
+- (void)collisionAsteroids:(NSMutableArray *)asteroids withBullets:(NSMutableArray *)bullets
+{
+    /*for(Asteroid * asteroid in asteroids)
+    {
+        for(Bullet * bullet in bullets)
+        {
+            if(intersect([asteroid getAABB], [bullet getAABB]))
+            {
+                
+            }
+        }
+    }*/
+}
+
+- (void)draw:(ES1Renderer *)renderer
+{
+    [bullets draw:renderer];
     
-    static const int corners = 3;
-    
-    static const GLfloat vertices[corners * 2] = {
-        -1.0f, -1.0f,
-        0.0f, 1.0f,
-        1.0f, -1.0f,
-    };
-    
-    static const GLubyte colors[corners * 2 * 4] = {
-        200, 50, 50, 255,
-        200, 200, 50, 255,
-        200, 50, 50, 255,
-    };
-    
-    static const GLubyte indices[corners] = {
-        0, 1, 2
-    };
-    
-    glPushMatrix();
-    
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    
-    glTranslatef(pos.x, pos.y, 0.0f);
-    glRotatef(angle, 0.0f, 0.0f, 1.0f);
-    glScalef(size.width, size.height, 1.0f);
-    
-    glVertexPointer(2, GL_FLOAT, 0, vertices);
-    glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
-    glLineWidth(2.0f);
-    glDrawElements(GL_LINE_LOOP, corners, GL_UNSIGNED_BYTE, indices);
-    
-    glPopMatrix();
+    [renderer renderPlayer:self];
 }
 
 - (void)touchesBegan:(CGPoint)location
@@ -171,11 +171,8 @@
 {
     if(isMove)
     {
-        float deltaX = location.x - startPos.x;
-        float deltaY = location.y - startPos.y;
-        
-        target.x = pos.x + deltaX;
-        target.y = pos.y + deltaY;
+        target.x = location.x;
+        target.y = location.y;
         
         needMove = YES;
         

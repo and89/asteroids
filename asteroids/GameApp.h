@@ -1,5 +1,3 @@
-#include "Player.h"
-
 @class ES1Renderer;
 
 @interface GameApp : NSObject
@@ -7,7 +5,10 @@
 + (id)sharedGameApp;
 
 - (void)update:(CGFloat)delta;
-- (void)draw;
+- (void)draw:(ES1Renderer *)renderer;
+
+/* Return gameplay rect */
+- (CGRect)getFieldRect;
 
 - (CGSize)getScreenSize;
 - (void)setScreenSize:(CGSize)newSize;

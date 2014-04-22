@@ -1,5 +1,9 @@
 #import "ES1Renderer.h"
 #import "GameApp.h"
+#import "Player.h"
+#import "Bullet.h"
+#import "Asteroid.h"
+#import "Misc.h"
 
 @implementation ES1Renderer
 
@@ -33,7 +37,7 @@
     // Clear the color buffer which clears the screen
     glClear(GL_COLOR_BUFFER_BIT);
     
-    [gameApp draw];
+    [gameApp draw:self];
     
 	// Present the renderbuffer to the screen
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];
@@ -108,6 +112,166 @@
     // Enable the OpenGL states we are going to be using when rendering
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
+}
+
+- (void)renderPlayer:(Player *)player
+{
+    static const int corners = 3;
+    
+    static const GLfloat vertices[corners * 2] = {
+        -1.0f, -1.0f,
+        0.0f, 1.0f,
+        1.0f, -1.0f,
+    };
+    
+    static const GLubyte colors[corners * 2 * 4] = {
+        200, 50, 50, 255,
+        200, 200, 50, 255,
+        200, 50, 50, 255,
+    };
+    
+    static const GLubyte indices[corners] = {
+        0, 1, 2
+    };
+    
+    glPushMatrix();
+    
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    glTranslatef([player getPos].x, [player getPos].y, 0.0f);
+    glRotatef([player getAngle], 0.0f, 0.0f, 1.0f);
+    glScalef([player getSize].width, [player getSize].height, 1.0f);
+    
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
+    glLineWidth(2.0f);
+    glDrawElements(GL_LINE_LOOP, corners, GL_UNSIGNED_BYTE, indices);
+    
+    glPopMatrix();
+}
+
+- (void)renderBullet:(Bullet *)bullet
+{
+    static const int corners = 4;
+    
+    static const GLfloat vertices[corners * 2] = {
+        -0.1f, -0.1f,
+        -0.1f, 0.1f,
+        0.1f, 0.1f,
+        0.1f, -0.1f,
+    };
+    
+    static const GLubyte colors[corners * 4] = {
+        255, 50, 50, 255,
+        255, 50, 50, 255,
+        255, 50, 50, 255,
+        255, 50, 50, 255,
+    };
+    
+    static const GLubyte indices[corners] = {
+        0, 1, 2, 3
+    };
+    
+    glPushMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    glTranslatef([bullet getPos].x, [bullet getPos].y, 0.0f);
+    glScalef([bullet getSize].width, [bullet getSize].height, 1.0f);
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
+    glLineWidth(2.0f);
+    glDrawElements(GL_LINE_LOOP, corners, GL_UNSIGNED_BYTE, indices);
+    
+    glPopMatrix();
+}
+
+- (void)renderAsteroid:(Asteroid *)asteroid
+{
+    static const int corners = 6;
+    
+    static GLfloat vertices[corners * 2];
+    
+    static const GLubyte colors[corners * 4] = {
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+    };
+    
+    static GLubyte indices[corners];
+    
+    static BOOL verticesInited = NO;
+    
+    if(!verticesInited)
+    {
+        float angle = 0.0f;
+        for(unsigned int i=0; i<corners; ++i)
+        {
+            vertices[i * 2] = cosf(angle);
+            vertices[i * 2 + 1] = sinf(angle);
+            indices[i] = i;
+            angle += 2.0 * M_PI / corners;
+        }
+        verticesInited = YES;
+    }
+    
+    glPushMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    glTranslatef([asteroid getPos].x, [asteroid getPos].y, 0.0f);
+    glRotatef([asteroid getAngle], 0.0f, 0.0f, 1.0f);
+    glScalef([asteroid getSize].width, [asteroid getSize].height, 1.0f);
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
+    glLineWidth(2.0f);
+    glDrawElements(GL_LINE_LOOP, corners, GL_UNSIGNED_BYTE, indices);
+    
+    glPopMatrix();
+}
+
+- (void)renderRect:(CGRect)rect
+{
+    static const int corners = 4;
+    
+    static GLfloat vertices[corners * 2];
+    
+    vertices[0] = rect.origin.x;
+    vertices[1] = rect.origin.y;
+    vertices[2] = rect.size.width;
+    vertices[3] = rect.origin.y;
+    vertices[4] = rect.size.width;
+    vertices[5] = rect.size.height;
+    vertices[6] = rect.origin.x;
+    vertices[7] = rect.size.height;
+    
+    static const GLubyte colors[corners * 4] = {
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+    };
+    
+    static const GLubyte indices[corners] = {
+        0,1,2,3,
+    };
+    
+    glPushMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
+    glLineWidth(1.0f);
+    glDrawElements(GL_LINE_LOOP, corners, GL_UNSIGNED_BYTE, indices);
+    glPopMatrix();
 }
 
 @end

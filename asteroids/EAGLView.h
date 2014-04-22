@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "ESRenderer.h"
+@class ES1Renderer;
 
 @class GameApp;
 
@@ -10,7 +10,7 @@
 // Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
 @interface EAGLView : UIView
 {
-	id <ESRenderer> renderer;
+	ES1Renderer * renderer;
 	BOOL animating;
 	NSInteger animationFrameInterval;
 	// Use of the CADisplayLink class is the preferred method for controlling your animation timing.

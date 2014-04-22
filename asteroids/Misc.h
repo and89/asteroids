@@ -9,5 +9,20 @@
 
 #define RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 180.0 / M_PI)
 
+// Macro which returns a random value between -1 and 1
+#define RANDOM_MINUS_1_TO_1() ((random() / (GLfloat)0x3fffffff )-1.0f)
+
+// Macro which returns a random number between 0 and 1
+#define RANDOM_0_TO_1() ((random() / (GLfloat)0x7fffffff ))
+
+typedef struct
+{
+    CGPoint c;
+    CGFloat r;
+} AABB;
+
+BOOL intersect(AABB aabb1, AABB aabb2);
+
+BOOL outOfScreen(CGSize screenRect, CGPoint pos, CGVector vel);
 
 #endif

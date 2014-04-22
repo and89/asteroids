@@ -8,6 +8,8 @@
     NSMutableArray * bullets;
     
     CGFloat speed;
+    
+    CGSize size;
 }
 
 - (id)init
@@ -16,7 +18,9 @@
     {
         bullets = [[NSMutableArray alloc] initWithCapacity:128];
         
-        speed = 8.0f;
+        speed = 10.0f;
+        
+        size = CGSizeMake(8.0f, 8.0f);
     }
     
     return self;
@@ -27,7 +31,7 @@
     CGFloat dx = speed * sin(DEGREES_TO_RADIANS(angle));
     CGFloat dy = speed * cos(DEGREES_TO_RADIANS(angle));
     
-    Bullet * bullet = [[Bullet alloc] initWithPos:pos andVelocity:CGVectorMake(dx, dy)];
+    Bullet * bullet = [[Bullet alloc] initWithPos:pos andSize:size andVelocity:CGVectorMake(dx, dy)];
     
     [bullets addObject:bullet];
 }
@@ -44,7 +48,10 @@
         
         CGPoint pos = [bullet getPos];
         
-        if((pos.x < 0 || pos.x > scrSize.width) && (pos.y < 0 || pos.y > scrSize.height))
+        if(pos.x < 0 ||
+           pos.x > scrSize.width ||
+           pos.y < 0 ||
+           pos.y > scrSize.height)
         {
             [outOfScreenObjects addObject:bullet];
         }
@@ -54,11 +61,11 @@
 
 }
 
-- (void)draw
+- (void)draw:(ES1Renderer *)renderer
 {
     for(Bullet * bullet in bullets)
     {
-        [bullet draw];
+        [bullet draw:renderer];
     }
 }
 

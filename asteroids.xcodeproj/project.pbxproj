@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A12A503018FFB0A700ABAAAE /* Bullets.m in Sources */ = {isa = PBXBuildFile; fileRef = A12A502F18FFB0A700ABAAAE /* Bullets.m */; };
+		A12A503318FFB0DB00ABAAAE /* Asteroid.m in Sources */ = {isa = PBXBuildFile; fileRef = A12A503218FFB0DB00ABAAAE /* Asteroid.m */; };
+		A12A503618FFB0E900ABAAAE /* Asteroids.m in Sources */ = {isa = PBXBuildFile; fileRef = A12A503518FFB0E900ABAAAE /* Asteroids.m */; };
 		A12CEF8018F406B90017651C /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = A12CEF7E18F406B90017651C /* Player.m */; };
 		A15FBD7A18F259A50028CDAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A15FBD7918F259A50028CDAE /* Foundation.framework */; };
 		A15FBD7C18F259A50028CDAE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A15FBD7B18F259A50028CDAE /* CoreGraphics.framework */; };
@@ -21,10 +24,18 @@
 		A15FBDB618F25A970028CDAE /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDB218F25A970028CDAE /* EAGLView.m */; };
 		A15FBDB718F25A970028CDAE /* ES1Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDB418F25A970028CDAE /* ES1Renderer.m */; };
 		A15FBDC018F289960028CDAE /* GameApp.m in Sources */ = {isa = PBXBuildFile; fileRef = A15FBDBE18F289960028CDAE /* GameApp.m */; };
+		A1D2563318F976AA00CAD220 /* Bullet.m in Sources */ = {isa = PBXBuildFile; fileRef = A1D2563218F976AA00CAD220 /* Bullet.m */; };
+		A1FA76181904CF800056C640 /* Misc.m in Sources */ = {isa = PBXBuildFile; fileRef = A1FA76171904CF800056C640 /* Misc.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A10D2A5018F43A2F00BE6CE6 /* Misc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Misc.h; sourceTree = "<group>"; };
+		A12A502E18FFB0A700ABAAAE /* Bullets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bullets.h; sourceTree = "<group>"; };
+		A12A502F18FFB0A700ABAAAE /* Bullets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bullets.m; sourceTree = "<group>"; };
+		A12A503118FFB0DB00ABAAAE /* Asteroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Asteroid.h; sourceTree = "<group>"; };
+		A12A503218FFB0DB00ABAAAE /* Asteroid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Asteroid.m; sourceTree = "<group>"; };
+		A12A503418FFB0E900ABAAAE /* Asteroids.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Asteroids.h; sourceTree = "<group>"; };
+		A12A503518FFB0E900ABAAAE /* Asteroids.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Asteroids.m; sourceTree = "<group>"; };
 		A12CEF7E18F406B90017651C /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		A12CEF7F18F406B90017651C /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		A15FBD7618F259A50028CDAE /* asteroids.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = asteroids.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,9 +57,11 @@
 		A15FBDB218F25A970028CDAE /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
 		A15FBDB318F25A970028CDAE /* ES1Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES1Renderer.h; sourceTree = "<group>"; };
 		A15FBDB418F25A970028CDAE /* ES1Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES1Renderer.m; sourceTree = "<group>"; };
-		A15FBDB518F25A970028CDAE /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
 		A15FBDBE18F289960028CDAE /* GameApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameApp.m; sourceTree = "<group>"; };
 		A15FBDBF18F289960028CDAE /* GameApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameApp.h; sourceTree = "<group>"; };
+		A1D2563118F976AA00CAD220 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bullet.h; sourceTree = "<group>"; };
+		A1D2563218F976AA00CAD220 /* Bullet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bullet.m; sourceTree = "<group>"; };
+		A1FA76171904CF800056C640 /* Misc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Misc.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +109,15 @@
 			isa = PBXGroup;
 			children = (
 				A10D2A5018F43A2F00BE6CE6 /* Misc.h */,
+				A1FA76171904CF800056C640 /* Misc.m */,
+				A12A503118FFB0DB00ABAAAE /* Asteroid.h */,
+				A12A503218FFB0DB00ABAAAE /* Asteroid.m */,
+				A12A503418FFB0E900ABAAAE /* Asteroids.h */,
+				A12A503518FFB0E900ABAAAE /* Asteroids.m */,
+				A1D2563118F976AA00CAD220 /* Bullet.h */,
+				A1D2563218F976AA00CAD220 /* Bullet.m */,
+				A12A502E18FFB0A700ABAAAE /* Bullets.h */,
+				A12A502F18FFB0A700ABAAAE /* Bullets.m */,
 				A12CEF7F18F406B90017651C /* Player.h */,
 				A12CEF7E18F406B90017651C /* Player.m */,
 				A15FBDBF18F289960028CDAE /* GameApp.h */,
@@ -104,7 +126,6 @@
 				A15FBDB218F25A970028CDAE /* EAGLView.m */,
 				A15FBDB318F25A970028CDAE /* ES1Renderer.h */,
 				A15FBDB418F25A970028CDAE /* ES1Renderer.m */,
-				A15FBDB518F25A970028CDAE /* ESRenderer.h */,
 				A15FBD8818F259A50028CDAE /* AppDelegate.h */,
 				A15FBD8918F259A50028CDAE /* AppDelegate.m */,
 				A15FBD8B18F259A50028CDAE /* Main_iPhone.storyboard */,
@@ -194,12 +215,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A12A503018FFB0A700ABAAAE /* Bullets.m in Sources */,
 				A12CEF8018F406B90017651C /* Player.m in Sources */,
 				A15FBD9318F259A50028CDAE /* ViewController.m in Sources */,
 				A15FBDB718F25A970028CDAE /* ES1Renderer.m in Sources */,
+				A1D2563318F976AA00CAD220 /* Bullet.m in Sources */,
 				A15FBDB618F25A970028CDAE /* EAGLView.m in Sources */,
 				A15FBDC018F289960028CDAE /* GameApp.m in Sources */,
 				A15FBD8A18F259A50028CDAE /* AppDelegate.m in Sources */,
+				A12A503318FFB0DB00ABAAAE /* Asteroid.m in Sources */,
+				A1FA76181904CF800056C640 /* Misc.m in Sources */,
+				A12A503618FFB0E900ABAAAE /* Asteroids.m in Sources */,
 				A15FBD8618F259A50028CDAE /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
