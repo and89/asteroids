@@ -6,6 +6,8 @@
     CGPoint pos;
     CGSize size;
     CGVector velocity;
+    
+    BOOL dead;
 }
 
 
@@ -16,6 +18,7 @@
         pos = newPos;
         size = newSize;
         velocity = vel;
+        dead = NO;
     }
     
     return self;
@@ -34,6 +37,24 @@
 - (CGVector)getVector
 {
     return velocity;
+}
+
+- (BOOL)getDead
+{
+    return dead;
+}
+
+- (void)setDead
+{
+    dead = YES;
+}
+
+- (AABB)getAABB
+{
+    AABB aabb;
+    aabb.c = pos;
+    aabb.r = MAX(size.width, size.height);
+    return aabb;
 }
 
 - (void)update:(CGFloat)delta

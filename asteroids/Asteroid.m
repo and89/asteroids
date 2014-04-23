@@ -11,6 +11,8 @@
     
     CGVector velocity;
     CGFloat angularVelocity;
+    
+    BOOL dead;
 }
 
 - (id)initWithPos:(CGPoint)startPos size:(CGSize)newSize
@@ -23,12 +25,47 @@
         
         angle = 0.0f;
         
+        dead = NO;
+        
         angularVelocity = 5.0f * RANDOM_MINUS_1_TO_1();
         
         velocity = CGVectorMake(2.0f * RANDOM_MINUS_1_TO_1(), 2.0f * RANDOM_MINUS_1_TO_1());
     }
     
     return self;
+}
+
+- (id)initWithPos:(CGPoint)startPos size:(CGSize)newSize vel:(CGVector)newVel
+{
+    if(self = [super init])
+    {
+        pos = startPos;
+        
+        size = newSize;
+        
+        angle = 0.0f;
+        
+        dead = NO;
+        
+        angularVelocity = 2.0f * RANDOM_MINUS_1_TO_1();
+        
+        velocity = CGVectorMake(1.0f * RANDOM_MINUS_1_TO_1(), 1.0f * RANDOM_MINUS_1_TO_1());
+        
+        velocity.dx += newVel.dx;
+        velocity.dy += newVel.dy;
+    }
+    
+    return self;
+}
+
+- (BOOL)getDead
+{
+    return dead;
+}
+
+- (void)setDead
+{
+    dead = YES;
 }
 
 - (CGVector)getVelocity
@@ -83,7 +120,8 @@
 
 - (void)draw:(ES1Renderer *)renderer
 {
-    [renderer renderAsteroid:self];
+    if(!dead)
+        [renderer renderAsteroid:self];
 }
 
 @end

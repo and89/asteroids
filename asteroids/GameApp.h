@@ -1,3 +1,5 @@
+@class Asteroid;
+@class Bullet;
 @class ES1Renderer;
 
 @interface GameApp : NSObject
@@ -6,9 +8,6 @@
 
 - (void)update:(CGFloat)delta;
 - (void)draw:(ES1Renderer *)renderer;
-
-/* Return gameplay rect */
-- (CGRect)getFieldRect;
 
 - (CGSize)getScreenSize;
 - (void)setScreenSize:(CGSize)newSize;
@@ -19,5 +18,9 @@
 
 /* Adapt coordinate */
 - (CGPoint)adjustTouchOrientationForTouch:(CGPoint)aTouch;
+
+- (void)fire;
+
+- (BOOL)collide:(Asteroid *)asteroid withBullet:(Bullet *)bullet;
 
 @end

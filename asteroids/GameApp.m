@@ -1,5 +1,8 @@
 #import "GameApp.h"
 #import "Player.h"
+#import "Bullet.h"
+#import "Bullets.h"
+#import "Asteroid.h"
 #import "Asteroids.h"
 #import "ES1Renderer.h"
 #include <dispatch/dispatch.h>
@@ -7,6 +10,8 @@
 @implementation GameApp
 {
     Player * player;
+    
+    Bullets * bullets;
     
     Asteroids * asteroids;
     
@@ -53,18 +58,14 @@
         
         player = [[Player alloc] init];
         
+        bullets = [[Bullets alloc] init];
+        
         asteroids = [[Asteroids alloc] init];
         
         srandomdev();
     }
     
     return self;
-}
-
-- (CGRect)getFieldRect
-{
-    CGRect rect = CGRectMake(-marginLeft, -marginBottom, screenSize.width + marginRight, screenSize.height + marginTop);
-    return rect;
 }
 
 - (CGSize)getScreenSize
@@ -77,20 +78,59 @@
     screenSize = newSize;
 }
 
+- (BOOL)collide:(Asteroid *)asteroid withBullet:(Bullet *)bullet
+{
+    if(intersect([asteroid getAABB], [bullet getAABB]))
+        return YES;
+    else
+        return NO;
+}
+
+- (void)fire
+{
+    CGFloat angle = [player getAngle];
+    CGPoint pos = [player getPos];
+    [bullets addBullet:pos andAngle:-angle];
+}
+
 - (void)update:(CGFloat)delta
 {
     [asteroids update:delta];
     
+    [bullets update:delta];
+    
     [player update:delta];
+    
+    NSMutableArray * allAsteroids = [asteroids getArray];
+    
+    NSMutableArray * allBullets = [bullets getArray];
+    
+    for(Asteroid * asteroid in allAsteroids)
+    {
+        if(intersect([player getAABB], [asteroid getAABB]))
+        {
+            NSLog(@"GAMEOVER");
+        }
+        
+        for(Bullet * bullet in allBullets)
+        {
+            if(intersect([asteroid getAABB], [bullet getAABB]))
+            {
+                [asteroid setDead];
+                [bullet setDead];
+            }
+            
+        }
+    }
 }
 
 - (void)draw:(ES1Renderer *)renderer
 {
     [asteroids draw:renderer];
     
-    [player draw:renderer];
+    [bullets draw:renderer];
     
-    [renderer renderRect:[self getFieldRect]];
+    [player draw:renderer];
 }
 
 - (CGPoint)adjustTouchOrientationForTouch:(CGPoint)aTouch

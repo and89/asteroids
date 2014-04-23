@@ -1,3 +1,5 @@
+#import "Misc.h"
+
 @class ES1Renderer;
 
 @interface Bullet : NSObject
@@ -9,7 +11,11 @@
 
 - (CGPoint)getPos;
 - (CGSize)getSize;
+- (AABB)getAABB;
 
 - (CGVector)getVector;
+
+- (BOOL)getDead;
+- (void)setDead;
 
 @end

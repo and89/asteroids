@@ -14,8 +14,6 @@
 - (CGFloat)getAngle;
 - (AABB)getAABB;
 
-- (void)collisionAsteroids:(NSMutableArray *)asteroids withBullets:(NSMutableArray *)bullets;
-
 - (void)touchesBegan:(CGPoint)location;
 - (void)touchesMoved:(CGPoint)location;
 - (void)touchesEnd:(CGPoint)location;

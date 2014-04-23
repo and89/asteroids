@@ -32,8 +32,6 @@
     
     CGPoint startPos;
     BOOL isMove;
-    
-    Bullets * bullets;
 }
 
 - (id)init
@@ -51,15 +49,12 @@
         deceleration = 1.5f;
         needMove = NO;
         isMove = NO;
-        bullets = [[Bullets alloc] init];
     }
     return self;
 }
 
 - (void)update:(CGFloat)delta
 {
-    [bullets update:delta];
-    
     if(!needMove)
         return;
     
@@ -133,24 +128,8 @@
     return aabb;
 }
 
-- (void)collisionAsteroids:(NSMutableArray *)asteroids withBullets:(NSMutableArray *)bullets
-{
-    /*for(Asteroid * asteroid in asteroids)
-    {
-        for(Bullet * bullet in bullets)
-        {
-            if(intersect([asteroid getAABB], [bullet getAABB]))
-            {
-                
-            }
-        }
-    }*/
-}
-
 - (void)draw:(ES1Renderer *)renderer
 {
-    [bullets draw:renderer];
-    
     [renderer renderPlayer:self];
 }
 
@@ -180,7 +159,7 @@
     }
     else
     {
-        [bullets addBullet:CGPointMake(pos.x, pos.y) andAngle:-angle];
+        [[GameApp sharedGameApp] fire];
     }
 }
 

@@ -9,4 +9,6 @@
 - (void)update:(CGFloat)delta;
 - (void)draw:(ES1Renderer *)renderer;
 
+- (NSMutableArray *)getArray;
+
 @end

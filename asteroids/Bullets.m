@@ -36,6 +36,11 @@
     [bullets addObject:bullet];
 }
 
+- (NSMutableArray *)getArray
+{
+    return bullets;
+}
+
 - (void)update:(CGFloat)delta
 {
     CGSize scrSize = [[GameApp sharedGameApp] getScreenSize];
@@ -55,6 +60,9 @@
         {
             [outOfScreenObjects addObject:bullet];
         }
+        
+        if([bullet getDead])
+            [outOfScreenObjects addObject:bullet];
     }
     
     [bullets removeObjectsInArray:outOfScreenObjects];
