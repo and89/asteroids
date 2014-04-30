@@ -1,22 +1,19 @@
-#import "Misc.h"
+#import "GameEntity.h"
 
 @class ES1Renderer;
 
-@interface Asteroid : NSObject
+@interface Asteroid : GameEntity
 
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)newSize;
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)newSize vel:(CGVector)newVel;
+/* Angular velocity */
+@property (nonatomic, readwrite, assign) CGFloat angVelocity;
+
+/* Start with random velocity */
+- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize;
+
+/* Start chunk after big asteroid crash */
+- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel;
 
 - (void)update:(CGFloat)delta;
 - (void)draw:(ES1Renderer *)renderer;
-
-- (CGVector)getVelocity;
-- (AABB)getAABB;
-- (CGPoint)getPos;
-- (CGFloat)getAngle;
-- (CGSize)getSize;
-
-- (BOOL)getDead;
-- (void)setDead;
 
 @end

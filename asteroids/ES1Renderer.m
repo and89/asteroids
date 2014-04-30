@@ -139,9 +139,9 @@
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    glTranslatef([player getPos].x, [player getPos].y, 0.0f);
-    glRotatef([player getAngle], 0.0f, 0.0f, 1.0f);
-    glScalef([player getSize].width, [player getSize].height, 1.0f);
+    glTranslatef([player position].x, [player position].y, 0.0f);
+    glRotatef([player angle], 0.0f, 0.0f, 1.0f);
+    glScalef([player size].width, [player size].height, 1.0f);
     
     glVertexPointer(2, GL_FLOAT, 0, vertices);
     glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
@@ -177,8 +177,8 @@
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    glTranslatef([bullet getPos].x, [bullet getPos].y, 0.0f);
-    glScalef([bullet getSize].width, [bullet getSize].height, 1.0f);
+    glTranslatef([bullet position].x, [bullet position].y, 0.0f);
+    glScalef([bullet size].width, [bullet size].height, 1.0f);
     glVertexPointer(2, GL_FLOAT, 0, vertices);
     glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
     glLineWidth(2.0f);
@@ -223,9 +223,9 @@
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
-    glTranslatef([asteroid getPos].x, [asteroid getPos].y, 0.0f);
-    glRotatef([asteroid getAngle], 0.0f, 0.0f, 1.0f);
-    glScalef([asteroid getSize].width, [asteroid getSize].height, 1.0f);
+    glTranslatef([asteroid position].x, [asteroid position].y, 0.0f);
+    glRotatef([asteroid angle], 0.0f, 0.0f, 1.0f);
+    glScalef([asteroid size].width, [asteroid size].height, 1.0f);
     glVertexPointer(2, GL_FLOAT, 0, vertices);
     glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
     glLineWidth(2.0f);
@@ -250,10 +250,6 @@
     vertices[7] = rect.size.height;
     
     static const GLubyte colors[corners * 4] = {
-        255, 255, 255, 255,
-        255, 255, 255, 255,
-        255, 255, 255, 255,
-        255, 255, 255, 255,
         255, 255, 255, 255,
         255, 255, 255, 255,
         255, 255, 255, 255,

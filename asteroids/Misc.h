@@ -15,14 +15,4 @@
 // Macro which returns a random number between 0 and 1
 #define RANDOM_0_TO_1() ((random() / (GLfloat)0x7fffffff ))
 
-typedef struct
-{
-    CGPoint c;
-    CGFloat r;
-} AABB;
-
-BOOL intersect(AABB aabb1, AABB aabb2);
-
-BOOL outOfScreen(CGSize screenRect, CGPoint pos, CGVector vel);
-
 #endif

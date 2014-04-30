@@ -5,113 +5,107 @@
 
 @implementation Asteroids
 {
-    NSMutableArray * bigAsteroids;
-    NSMutableArray * smallAsteroids;
-    
-    CGFloat respawnPeriod;
-    CGFloat respawnTime;
-    
-    NSInteger maxAsteroids;
+    CGFloat _respawnTime;
 }
 
 - (id)init
 {
     if(self = [super init])
     {
-        bigAsteroids = [[NSMutableArray alloc] initWithCapacity:64];
+        self.bigAsteroids = [[NSMutableArray alloc] initWithCapacity:64];
         
-        smallAsteroids = [[NSMutableArray alloc] initWithCapacity:128];
+        self.smallAsteroids = [[NSMutableArray alloc] initWithCapacity:128];
         
-        respawnPeriod = 4.0f;
-        respawnTime = 0.0f;
+        self.respawnPeriod = 4.0f;
         
-        maxAsteroids = 8;
+        self.numberOfChunks = 3;
+        
+        self.maxAsteroidsCount = 8;
+        
+        _respawnTime = 0.0f;
+        
+        self.bigAsteroidSize = CGSizeMake(30.0f, 30.0f);
+        
+        self.smallAsteroidSize = CGSizeMake(15.0f, 15.0f);
     }
     
     return self;
 }
 
-- (void)addAsteroid
+- (void)addBigAsteroid
 {
-    CGSize screenSize = [[GameApp sharedGameApp] getScreenSize];
+    CGFloat randomPosX = -self.bigAsteroidSize.width;
+    CGFloat randomPosY = -self.bigAsteroidSize.height;
     
-    CGSize size = CGSizeMake(30.0f, 30.0f);
+    CGPoint startPos = CGPointMake(randomPosX, randomPosY);
     
-    CGFloat minY = screenSize.height;
-    CGFloat maxY = screenSize.height + 30.0f;
+    Asteroid * newAsteroid = [[Asteroid alloc] initWithPos:startPos size:self.bigAsteroidSize];
     
-    CGFloat minX = -30.0f;
-    CGFloat maxX = 0.0f;
-    
-    CGFloat randomX = -40.0f + 10.0f * RANDOM_MINUS_1_TO_1();
-    CGFloat randomY = screenSize.height + 40.0f + 10.0f * RANDOM_MINUS_1_TO_1();
-    
-    CGPoint startPos = CGPointMake(randomX, randomY);
-    
-    Asteroid * newAsteroid = [[Asteroid alloc] initWithPos:startPos size:size];
-    
-    [bigAsteroids addObject:newAsteroid];
+    [self.bigAsteroids addObject:newAsteroid];
 }
 
-- (void)addSmallAsteroid:(CGPoint)startPos vel:(CGVector)velocity
+- (void)addChunks:(CGPoint)ownerPos vel:(CGVector)ownerVel
 {
-    CGSize size = CGSizeMake(15.0f, 15.0f);
-    
-    Asteroid * newAsteroid1 = [[Asteroid alloc] initWithPos:startPos size:size vel:velocity];
-    Asteroid * newAsteroid2 = [[Asteroid alloc] initWithPos:startPos size:size vel:velocity];
-    Asteroid * newAsteroid3 = [[Asteroid alloc] initWithPos:startPos size:size vel:velocity];
-    
-    [bigAsteroids addObject:newAsteroid1];
-    [bigAsteroids addObject:newAsteroid2];
-    [bigAsteroids addObject:newAsteroid3];
-}
-
-- (NSMutableArray *)getArray
-{
-    return bigAsteroids;
+    for(int i=0; i<self.numberOfChunks; ++i)
+    {
+        Asteroid * chunk = [[Asteroid alloc] initWithPos:ownerPos size:self.smallAsteroidSize vel:ownerVel];
+        
+        [self.smallAsteroids addObject:chunk];
+    }
 }
 
 - (void)update:(CGFloat)delta
 {
-    NSMutableArray * screenOut = [[NSMutableArray alloc] init];
+    NSMutableArray * deadBigAsteroids = [[NSMutableArray alloc] init];
     
-    for(Asteroid * asteroid in bigAsteroids)
+    NSMutableArray * deadSmallAsteroids = [[NSMutableArray alloc] init];
+    
+    for(Asteroid * asteroid in self.bigAsteroids)
     {
         [asteroid update:delta];
         
-        if([asteroid getDead])
-            [screenOut addObject:asteroid];
+        if([asteroid dead])
+            [deadBigAsteroids addObject:asteroid];
     }
     
-    for(Asteroid * asteroid in screenOut)
+    for(Asteroid * asteroid in self.smallAsteroids)
     {
-        CGPoint oldPos = [asteroid getPos];
-        CGVector oldVel = [asteroid getVelocity];
-        CGSize oldSize = [asteroid getSize];
-        if(oldSize.width > 15.0f)
-            [self addSmallAsteroid:oldPos vel:oldVel];
-    }
-    
-    [bigAsteroids removeObjectsInArray:screenOut];
-    
-    respawnTime += delta;
-    
-    if(respawnTime >= respawnPeriod)
-    {
-        if([bigAsteroids count] < maxAsteroids)
-        {
-            [self addAsteroid];
-        }
+        [asteroid update:delta];
         
-        respawnTime = 0.0f;
+        if([asteroid dead])
+            [deadSmallAsteroids addObject:asteroid];
+    }
+    
+    [self.smallAsteroids removeObjectsInArray:deadSmallAsteroids];
+    
+    /* Create chunks for every big asteroi */
+    for(Asteroid * bigAsteroid in deadBigAsteroids)
+    {
+        [self addChunks:[bigAsteroid position] vel:[bigAsteroid velocity]];
+    }
+    
+    [self.bigAsteroids removeObjectsInArray:deadBigAsteroids];
+    
+    _respawnTime += delta;
+    
+    if((_respawnTime >= self.respawnPeriod) && ([self.bigAsteroids count] < self.maxAsteroidsCount))
+    {
+        [self addBigAsteroid];
+        
+        _respawnTime = 0.0f;
     }
 }
 
 - (void)draw:(ES1Renderer *)renderer
 {
-    for(Asteroid * asteroid in bigAsteroids)
+    for(Asteroid * bigAsteroid in self.bigAsteroids)
     {
-        [asteroid draw:renderer];
+        [bigAsteroid draw:renderer];
+    }
+    
+    for (Asteroid * smallAsteroid in self.smallAsteroids)
+    {
+        [smallAsteroid draw:renderer];
     }
 }
 

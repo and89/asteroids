@@ -1,21 +1,12 @@
-#import "Misc.h"
+#import "GameEntity.h"
 
 @class ES1Renderer;
 
-@interface Bullet : NSObject
+@interface Bullet : GameEntity
 
-- (id)initWithPos:(CGPoint)newPos andSize:(CGSize)newSize andVelocity:(CGVector)vel;
+- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel;
 
 - (void)update:(CGFloat)delta;
 - (void)draw:(ES1Renderer *)renderer;
-
-- (CGPoint)getPos;
-- (CGSize)getSize;
-- (AABB)getAABB;
-
-- (CGVector)getVector;
-
-- (BOOL)getDead;
-- (void)setDead;
 
 @end

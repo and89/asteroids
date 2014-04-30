@@ -1,127 +1,71 @@
 #import "Asteroid.h"
-#import "Misc.h"
 #import "GameApp.h"
 #import "ES1Renderer.h"
+#import "Misc.h"
 
 @implementation Asteroid
 {
-    CGPoint pos;
-    CGSize size;
-    CGFloat angle;
-    
-    CGVector velocity;
-    CGFloat angularVelocity;
-    
-    BOOL dead;
 }
 
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)newSize
+- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize
 {
-    if(self = [super init])
+    if(self = [super initWithPos:startPos size:startSize])
     {
-        pos = startPos;
+        self.velocity = CGVectorMake(2.0f * RANDOM_MINUS_1_TO_1(), 2.0f * RANDOM_MINUS_1_TO_1());
         
-        size = newSize;
+        self.angVelocity = 5.0f * RANDOM_MINUS_1_TO_1();
         
-        angle = 0.0f;
-        
-        dead = NO;
-        
-        angularVelocity = 5.0f * RANDOM_MINUS_1_TO_1();
-        
-        velocity = CGVectorMake(2.0f * RANDOM_MINUS_1_TO_1(), 2.0f * RANDOM_MINUS_1_TO_1());
+        self.dead = NO;
     }
     
     return self;
 }
 
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)newSize vel:(CGVector)newVel
+- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel
 {
-    if(self = [super init])
+    if(self = [super initWithPos:startPos size:startSize])
     {
-        pos = startPos;
+        CGFloat randomVelX = 1.0f * RANDOM_MINUS_1_TO_1();
+        CGFloat randomVelY = 1.0f * RANDOM_MINUS_1_TO_1();
         
-        size = newSize;
+        CGVector newVelocity = CGVectorMake(startVel.dx + randomVelX, startVel.dy + randomVelY);
         
-        angle = 0.0f;
+        self.velocity = newVelocity;
         
-        dead = NO;
+        self.angVelocity = 2.0f * RANDOM_MINUS_1_TO_1();
         
-        angularVelocity = 2.0f * RANDOM_MINUS_1_TO_1();
-        
-        velocity = CGVectorMake(1.0f * RANDOM_MINUS_1_TO_1(), 1.0f * RANDOM_MINUS_1_TO_1());
-        
-        velocity.dx += newVel.dx;
-        velocity.dy += newVel.dy;
+        self.dead = NO;
     }
     
     return self;
-}
-
-- (BOOL)getDead
-{
-    return dead;
-}
-
-- (void)setDead
-{
-    dead = YES;
-}
-
-- (CGVector)getVelocity
-
-{
-    return velocity;
-}
-
-- (AABB)getAABB
-{
-    AABB aabb;
-    
-    aabb.c = pos;
-    aabb.r = MAX(size.width, size.height);
-    
-    return aabb;
-}
-
-- (CGPoint)getPos
-{
-    return pos;
-}
-
-- (CGFloat)getAngle
-{
-    return angle;
-}
-
-- (CGSize)getSize
-{
-    return size;
 }
 
 - (void)update:(CGFloat)delta
 {
-    pos.x += velocity.dx;
-    pos.y += velocity.dy;
+    [super update:delta];
     
-    angle += angularVelocity;
+    self.angle += self.angVelocity;
     
-    CGSize rect = [[GameApp sharedGameApp] getScreenSize];
+    CGSize screenRect = [[GameApp sharedGameApp] getScreenSize];
     
-    if(pos.x < 0)
-        pos.x = rect.width;
-    if(pos.x > rect.width)
-        pos.x = 0;
-    if(pos.y < 0)
-        pos.y = rect.height;
-    if(pos.y > rect.height)
-        pos.y = 0;
+    CGFloat radius = MAX(self.size.width, self.size.height);
+    
+    if(self.position.x < 0 - radius)
+        [self setPosition:CGPointMake(screenRect.width, self.position.y)];
+    
+    if(self.position.x > screenRect.width + radius)
+        [self setPosition:CGPointMake(0.0f, self.position.y)];
+    
+    if(self.position.y < 0 - radius)
+        [self setPosition:CGPointMake(self.position.x, screenRect.height)];
+    
+    if(self.position.y > screenRect.height + radius)
+        [self setPosition:CGPointMake(self.position.x, 0.0f)];
 }
 
 - (void)draw:(ES1Renderer *)renderer
 {
-    if(!dead)
-        [renderer renderAsteroid:self];
+    [renderer renderAsteroid:self];
 }
 
 @end

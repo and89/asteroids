@@ -5,22 +5,17 @@
 
 @implementation Bullets
 {
-    NSMutableArray * bullets;
-    
-    CGFloat speed;
-    
-    CGSize size;
 }
 
 - (id)init
 {
     if(self = [super init])
     {
-        bullets = [[NSMutableArray alloc] initWithCapacity:128];
+        self.bullets = [[NSMutableArray alloc] initWithCapacity:128];
         
-        speed = 10.0f;
+        self.bulletVelocity = 10.0f;
         
-        size = CGSizeMake(8.0f, 8.0f);
+        self.bulletSize = CGSizeMake(8.0f, 8.0f);
     }
     
     return self;
@@ -28,50 +23,39 @@
 
 - (void)addBullet:(CGPoint)pos andAngle:(CGFloat)angle
 {
-    CGFloat dx = speed * sin(DEGREES_TO_RADIANS(angle));
-    CGFloat dy = speed * cos(DEGREES_TO_RADIANS(angle));
+    CGFloat dx = self.bulletVelocity * sin(DEGREES_TO_RADIANS(angle));
+    CGFloat dy = self.bulletVelocity * cos(DEGREES_TO_RADIANS(angle));
     
-    Bullet * bullet = [[Bullet alloc] initWithPos:pos andSize:size andVelocity:CGVectorMake(dx, dy)];
+    Bullet * bullet = [[Bullet alloc] initWithPos:pos size:self.bulletSize vel:CGVectorMake(dx, dy)];
     
-    [bullets addObject:bullet];
-}
-
-- (NSMutableArray *)getArray
-{
-    return bullets;
+    [self.bullets addObject:bullet];
 }
 
 - (void)update:(CGFloat)delta
 {
-    CGSize scrSize = [[GameApp sharedGameApp] getScreenSize];
+    CGSize screenSize = [[GameApp sharedGameApp] getScreenSize];
     
-    NSMutableArray * outOfScreenObjects = [[NSMutableArray alloc] init];
+    NSMutableArray * deadBullets = [[NSMutableArray alloc] init];
     
-    for(Bullet * bullet in bullets)
+    for(Bullet * bullet in self.bullets)
     {
         [bullet update:delta];
         
-        CGPoint pos = [bullet getPos];
+        CGPoint pos = [bullet position];
         
-        if(pos.x < 0 ||
-           pos.x > scrSize.width ||
-           pos.y < 0 ||
-           pos.y > scrSize.height)
+        if(pos.x < 0 || pos.x > screenSize.width || pos.y < 0 || pos.y > screenSize.height)
         {
-            [outOfScreenObjects addObject:bullet];
+            [deadBullets addObject:bullet];
         }
-        
-        if([bullet getDead])
-            [outOfScreenObjects addObject:bullet];
     }
     
-    [bullets removeObjectsInArray:outOfScreenObjects];
+    [self.bullets removeObjectsInArray:deadBullets];
 
 }
 
 - (void)draw:(ES1Renderer *)renderer
 {
-    for(Bullet * bullet in bullets)
+    for(Bullet * bullet in self.bullets)
     {
         [bullet draw:renderer];
     }

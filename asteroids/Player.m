@@ -1,63 +1,66 @@
 #import "Player.h"
-#import "Bullets.h"
-#import "Asteroid.h"
 #import "GameApp.h"
 #import "Misc.h"
 #import "ES1Renderer.h"
 
 @implementation Player
 {
-    /* Current pos if ship */
-    CGPoint pos;
-    
-    /* Size */
-    CGSize size;
-    
     /* where to go */
-    CGPoint target;
+    CGPoint _target;
     
-    CGVector speed;
-    CGFloat speedDelta;
+    CGPoint _startPos;
+    CGPoint _currPos;
     
-    /* Speed */
-    CGFloat velocity;
+    BOOL _isMove;
     
-    /* Current angle */
-    CGFloat angle;
-    
-    CGFloat acceleration;
-    CGFloat deceleration;
-    
-    BOOL needMove;
-    
-    CGPoint startPos;
-    BOOL isMove;
+    BOOL _needMove;
 }
 
-- (id)init
+- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize
 {
-    if(self = [super init])
+    if(self = [super initWithPos:startPos size:startSize])
     {
-        pos = CGPointMake(284, 160);
-        size = CGSizeMake(10.0f, 10.0f);
-        speed = CGVectorMake(0.0f, 0.0f);
-        speedDelta = 0.9;
-        target = CGPointZero;
-        velocity = 0.05f;
-        angle = 0.0f;
-        acceleration = 0.008f;
-        deceleration = 1.5f;
-        needMove = NO;
-        isMove = NO;
+        self.accelerate = 1.0f;
+        
+        _target = CGPointZero;
+        
+        _startPos = CGPointZero;
+        _currPos = CGPointZero;
+        
+        _isMove = NO;
+        _needMove = NO;
     }
     return self;
 }
 
 - (void)update:(CGFloat)delta
 {
-    if(!needMove)
-        return;
+    //if(!_needMove)
+    //    return;
     
+    [super update:delta];
+    
+    CGVector deltaPos = CGVectorMake(_target.x - self.position.x, _target.y - self.position.y);
+    
+    float dist = DISTANCE(deltaPos.dx, deltaPos.dy);
+    
+    self.accelerate = dist / 8.0f;
+    
+    CGVector normalized = CGVectorMake(deltaPos.dx / dist, deltaPos.dy / dist);
+    
+    self.velocity = normalized;
+    
+    self.angle = RADIANS_TO_DEGREES(acosf(normalized.dx));
+    
+    if(normalized.dy < 0.0)
+        self.angle *= -1.0f;
+    
+    self.angle = self.angle - 90.0f;
+    
+    
+    
+    
+    /*
     float deltaX = target.x - pos.x;
     float deltaY = target.y - pos.y;
     float dist = DISTANCE(deltaX, deltaY);
@@ -101,31 +104,7 @@
         pos.x = target.x;
         pos.y = target.y;
         needMove = NO;
-    }
-    
-}
-
-- (CGPoint)getPos
-{
-    return pos;
-}
-
-- (CGSize)getSize
-{
-    return size;
-}
-
-- (CGFloat)getAngle
-{
-    return angle;
-}
-
-- (AABB)getAABB
-{
-    AABB aabb;
-    aabb.c = pos;
-    aabb.r = MAX(size.width, size.height);
-    return aabb;
+    }*/
 }
 
 - (void)draw:(ES1Renderer *)renderer
@@ -135,27 +114,29 @@
 
 - (void)touchesBegan:(CGPoint)location
 {
-    if(isMove)
+    if(_isMove)
         return;
     
-    startPos = location;
+    _startPos = location;
 }
 
 - (void)touchesMoved:(CGPoint)location
 {
-    isMove = YES;
+    _isMove = YES;
+    
+    _currPos = location;
 }
 
 - (void)touchesEnd:(CGPoint)location
 {
-    if(isMove)
+    if(_isMove)
     {
-        target.x = location.x;
-        target.y = location.y;
+        _target.x = location.x;
+        _target.y = location.y;
         
-        needMove = YES;
+        _needMove = YES;
         
-        isMove = NO;
+        _isMove = NO;
     }
     else
     {

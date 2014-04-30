@@ -21,6 +21,4 @@
 
 - (void)fire;
 
-- (BOOL)collide:(Asteroid *)asteroid withBullet:(Bullet *)bullet;
-
 @end

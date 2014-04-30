@@ -1,18 +1,13 @@
-#import "Misc.h"
+#import "GameEntity.h"
 
 @class ES1Renderer;
 
-@interface Player : NSObject
+@interface Player : GameEntity
 
-- (id)init;
+- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize;
 
 - (void)update:(CGFloat)delta;
 - (void)draw:(ES1Renderer *)renderer;
-
-- (CGPoint)getPos;
-- (CGSize)getSize;
-- (CGFloat)getAngle;
-- (AABB)getAABB;
 
 - (void)touchesBegan:(CGPoint)location;
 - (void)touchesMoved:(CGPoint)location;

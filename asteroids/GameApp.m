@@ -25,11 +25,6 @@
     
     /* Time when user began touch */
     CGFloat currentTime;
-    
-    NSInteger marginLeft;
-    NSInteger marginRight;
-    NSInteger marginTop;
-    NSInteger marginBottom;
 }
 
 + (id)sharedGameApp
@@ -51,12 +46,7 @@
     {
         screenSize = CGSizeMake(480, 320);
         
-        marginLeft = 30;
-        marginRight = 30;
-        marginTop = 30;
-        marginBottom = 30;
-        
-        player = [[Player alloc] init];
+        player = [[Player alloc] initWithPos:CGPointMake(screenSize.width / 2, screenSize.height / 2) size:CGSizeMake(10.0f, 10.0f)];
         
         bullets = [[Bullets alloc] init];
         
@@ -78,18 +68,10 @@
     screenSize = newSize;
 }
 
-- (BOOL)collide:(Asteroid *)asteroid withBullet:(Bullet *)bullet
-{
-    if(intersect([asteroid getAABB], [bullet getAABB]))
-        return YES;
-    else
-        return NO;
-}
-
 - (void)fire
 {
-    CGFloat angle = [player getAngle];
-    CGPoint pos = [player getPos];
+    CGFloat angle = [player angle];
+    CGPoint pos = [player position];
     [bullets addBullet:pos andAngle:-angle];
 }
 
@@ -101,25 +83,41 @@
     
     [player update:delta];
     
-    NSMutableArray * allAsteroids = [asteroids getArray];
+    NSMutableArray * allAsteroids = [asteroids bigAsteroids];
     
-    NSMutableArray * allBullets = [bullets getArray];
+    NSMutableArray * allBullets = [bullets bullets];
     
     for(Asteroid * asteroid in allAsteroids)
     {
-        if(intersect([player getAABB], [asteroid getAABB]))
+        if([asteroid intersectWith:player])
         {
             NSLog(@"GAMEOVER");
         }
         
         for(Bullet * bullet in allBullets)
         {
-            if(intersect([asteroid getAABB], [bullet getAABB]))
+            if([bullet intersectWith:asteroid])
             {
-                [asteroid setDead];
-                [bullet setDead];
+                [asteroid setDead:YES];
+                [bullet setDead:YES];
             }
-            
+        }
+    }
+    
+    for(Asteroid * small in [asteroids smallAsteroids])
+    {
+        if([small intersectWith:player])
+        {
+            NSLog(@"GAMEVOR");
+        }
+        
+        for(Bullet * bullet in allBullets)
+        {
+            if([bullet intersectWith:small])
+            {
+                [small setDead:YES];
+                [bullet setDead:YES];
+            }
         }
     }
 }
