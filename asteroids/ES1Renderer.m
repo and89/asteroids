@@ -25,19 +25,17 @@
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
-        
-        gameApp = [GameApp sharedGameApp];
 	}
 	
 	return self;
 }
 
-- (void) render {
-    
+- (void)render
+{
     // Clear the color buffer which clears the screen
     glClear(GL_COLOR_BUFFER_BIT);
     
-    [gameApp draw:self];
+    [[GameApp sharedGameApp] draw:self];
     
 	// Present the renderbuffer to the screen
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];
@@ -57,7 +55,7 @@
         return NO;
     }
     
-    [gameApp setScreenSize:CGSizeMake(backingWidth, backingHeight)];
+    [[GameApp sharedGameApp] setScreenSize:CGSizeMake(backingWidth, backingHeight)];
     
     // Initialize OpenGL now that the necessary buffers have been created and bound
 	[self initOpenGL];

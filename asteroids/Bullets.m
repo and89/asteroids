@@ -33,7 +33,7 @@
 
 - (void)update:(CGFloat)delta
 {
-    CGSize screenSize = [[GameApp sharedGameApp] getScreenSize];
+    CGSize screenSize = [[GameApp sharedGameApp] screenSize];
     
     NSMutableArray * deadBullets = [[NSMutableArray alloc] init];
     
@@ -43,7 +43,7 @@
         
         CGPoint pos = [bullet position];
         
-        if(pos.x < 0 || pos.x > screenSize.width || pos.y < 0 || pos.y > screenSize.height)
+        if([bullet dead] == YES || pos.x < 0 || pos.x > screenSize.width || pos.y < 0 || pos.y > screenSize.height)
         {
             [deadBullets addObject:bullet];
         }

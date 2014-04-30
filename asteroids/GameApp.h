@@ -1,23 +1,33 @@
-@class Asteroid;
-@class Bullet;
+@class Player;
+@class Asteroids;
+@class Bullets;
 @class ES1Renderer;
 
 @interface GameApp : NSObject
+
+@property (nonatomic, readwrite, assign) CGSize screenSize;
+
+@property (nonatomic, readwrite, strong) Player * player;
+
+@property (nonatomic, readwrite, strong) Asteroids * asteroids;
+
+@property (nonatomic, readwrite, strong) Bullets * bullets;
+
+@property (nonatomic, readwrite, assign) BOOL gameOver;
 
 + (id)sharedGameApp;
 
 - (void)update:(CGFloat)delta;
 - (void)draw:(ES1Renderer *)renderer;
 
-- (CGSize)getScreenSize;
-- (void)setScreenSize:(CGSize)newSize;
+- (void)collideAsteroids:(NSMutableArray *)asteroids withBullets:(NSMutableArray *)bullets;
+
+- (void)collidePlayerWithAsteroids:(NSMutableArray *)asteroids;
+
 
 - (void)touchesBegan:(CGPoint)location;
 - (void)touchesMoved:(CGPoint)location;
 - (void)touchesEnd:(CGPoint)location;
-
-/* Adapt coordinate */
-- (CGPoint)adjustTouchOrientationForTouch:(CGPoint)aTouch;
 
 - (void)fire;
 

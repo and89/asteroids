@@ -22,7 +22,7 @@
     {
         self.accelerate = 1.0f;
         
-        _target = CGPointZero;
+        _target = startPos;
         
         _startPos = CGPointZero;
         _currPos = CGPointZero;
@@ -35,9 +35,10 @@
 
 - (void)update:(CGFloat)delta
 {
-    //if(!_needMove)
-    //    return;
+    //TODO: refactoring!
     
+    if(!_needMove)
+        return;
     [super update:delta];
     
     CGVector deltaPos = CGVectorMake(_target.x - self.position.x, _target.y - self.position.y);
@@ -57,6 +58,11 @@
     
     self.angle = self.angle - 90.0f;
     
+    if(fabsf(_target.x - self.position.x) < 0.1f && fabsf(_target.y - self.position.y) < 0.1f)
+    {
+        self.position = _target;
+        _needMove = NO;
+    }
     
     
     

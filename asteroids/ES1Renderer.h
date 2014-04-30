@@ -5,8 +5,6 @@
 @class Bullet;
 @class Asteroid;
 
-@class GameApp;
-
 @interface ES1Renderer : NSObject
 {
 	EAGLContext * context;
@@ -17,8 +15,6 @@
 	
 	// The OpenGL names for the framebuffer and renderbuffer used to render to this view
 	GLuint defaultFramebuffer, colorRenderbuffer;
-    
-    GameApp * gameApp;
 }
 
 - (void)render;

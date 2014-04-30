@@ -11,7 +11,7 @@
 {
     if(self = [super initWithPos:startPos size:startSize])
     {
-        self.velocity = CGVectorMake(2.0f * RANDOM_MINUS_1_TO_1(), 2.0f * RANDOM_MINUS_1_TO_1());
+        self.velocity = CGVectorMake(1.0f * RANDOM_MINUS_1_TO_1(), 1.0f * RANDOM_MINUS_1_TO_1());
         
         self.angVelocity = 5.0f * RANDOM_MINUS_1_TO_1();
         
@@ -25,14 +25,14 @@
 {
     if(self = [super initWithPos:startPos size:startSize])
     {
-        CGFloat randomVelX = 1.0f * RANDOM_MINUS_1_TO_1();
-        CGFloat randomVelY = 1.0f * RANDOM_MINUS_1_TO_1();
+        CGFloat randomVelX = 0.5f * RANDOM_MINUS_1_TO_1();
+        CGFloat randomVelY = 0.5f * RANDOM_MINUS_1_TO_1();
         
         CGVector newVelocity = CGVectorMake(startVel.dx + randomVelX, startVel.dy + randomVelY);
         
         self.velocity = newVelocity;
         
-        self.angVelocity = 2.0f * RANDOM_MINUS_1_TO_1();
+        self.angVelocity = 1.0f * RANDOM_MINUS_1_TO_1();
         
         self.dead = NO;
     }
@@ -46,7 +46,7 @@
     
     self.angle += self.angVelocity;
     
-    CGSize screenRect = [[GameApp sharedGameApp] getScreenSize];
+    CGSize screenRect = [[GameApp sharedGameApp] screenSize];
     
     CGFloat radius = MAX(self.size.width, self.size.height);
     

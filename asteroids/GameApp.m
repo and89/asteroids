@@ -9,22 +9,6 @@
 
 @implementation GameApp
 {
-    Player * player;
-    
-    Bullets * bullets;
-    
-    Asteroids * asteroids;
-    
-    CGSize screenSize;
-    
-    /* Position where user start touch */
-    CGPoint startPoint;
-    
-    /* Position of touch when user move finger on the screen */
-    CGPoint currentPoint;
-    
-    /* Time when user began touch */
-    CGFloat currentTime;
 }
 
 + (id)sharedGameApp
@@ -44,13 +28,15 @@
 {
     if(self = [super init])
     {
-        screenSize = CGSizeMake(480, 320);
+        self.screenSize = CGSizeMake(480, 320);
         
-        player = [[Player alloc] initWithPos:CGPointMake(screenSize.width / 2, screenSize.height / 2) size:CGSizeMake(10.0f, 10.0f)];
+        self.player = [[Player alloc] initWithPos:CGPointMake(self.screenSize.width / 2, self.screenSize.height / 2) size:CGSizeMake(10.0f, 10.0f)];
         
-        bullets = [[Bullets alloc] init];
+        self.bullets = [[Bullets alloc] init];
         
-        asteroids = [[Asteroids alloc] init];
+        self.asteroids = [[Asteroids alloc] init];
+        
+        self.gameOver = NO;
         
         srandomdev();
     }
@@ -58,40 +44,30 @@
     return self;
 }
 
-- (CGSize)getScreenSize
-{
-    return screenSize;
-}
-
-- (void)setScreenSize:(CGSize)newSize
-{
-    screenSize = newSize;
-}
-
 - (void)fire
 {
-    CGFloat angle = [player angle];
-    CGPoint pos = [player position];
-    [bullets addBullet:pos andAngle:-angle];
+    CGFloat angle = [self.player angle];
+    CGPoint pos = [self.player position];
+    [self.bullets addBullet:pos andAngle:-angle];
 }
 
 - (void)update:(CGFloat)delta
 {
-    [asteroids update:delta];
+    [self.asteroids update:delta];
     
-    [bullets update:delta];
+    [self.bullets update:delta];
     
-    [player update:delta];
+    [self.player update:delta];
     
-    NSMutableArray * allAsteroids = [asteroids bigAsteroids];
+    NSMutableArray * allAsteroids = [self.asteroids bigAsteroids];
     
-    NSMutableArray * allBullets = [bullets bullets];
+    NSMutableArray * allBullets = [self.bullets bullets];
     
     for(Asteroid * asteroid in allAsteroids)
     {
-        if([asteroid intersectWith:player])
+        if([asteroid intersectWith:self.player])
         {
-            NSLog(@"GAMEOVER");
+            self.gameOver = YES;
         }
         
         for(Bullet * bullet in allBullets)
@@ -104,11 +80,11 @@
         }
     }
     
-    for(Asteroid * small in [asteroids smallAsteroids])
+    for(Asteroid * small in [self.asteroids smallAsteroids])
     {
-        if([small intersectWith:player])
+        if([small intersectWith:self.player])
         {
-            NSLog(@"GAMEVOR");
+            self.gameOver = YES;
         }
         
         for(Bullet * bullet in allBullets)
@@ -124,22 +100,18 @@
 
 - (void)draw:(ES1Renderer *)renderer
 {
-    [asteroids draw:renderer];
+    [self.asteroids draw:renderer];
     
-    [bullets draw:renderer];
+    [self.bullets draw:renderer];
     
-    [player draw:renderer];
+    [self.player draw:renderer];
 }
 
 - (CGPoint)adjustTouchOrientationForTouch:(CGPoint)aTouch
 {
 	CGPoint touchLocation;
     touchLocation.x = aTouch.x;
-	touchLocation.y = screenSize.height - aTouch.y;
-    
-#ifdef DEBUG
-    //NSLog(@"tap location: %f,%f", touchLocation.x, touchLocation.y);
-#endif
+	touchLocation.y = self.screenSize.height - aTouch.y;
 	
 	return touchLocation;
 }
@@ -147,19 +119,19 @@
 - (void)touchesBegan:(CGPoint)location
 {
     CGPoint loc = [self adjustTouchOrientationForTouch:location];
-    [player touchesBegan:loc];
+    [self.player touchesBegan:loc];
 }
 
 - (void)touchesMoved:(CGPoint)location
 {
     CGPoint loc = [self adjustTouchOrientationForTouch:location];
-    [player touchesMoved:loc];
+    [self.player touchesMoved:loc];
 }
 
 - (void)touchesEnd:(CGPoint)location
 {
     CGPoint loc = [self adjustTouchOrientationForTouch:location];
-    [player touchesEnd:loc];
+    [self.player touchesEnd:loc];
 }
 
 @end

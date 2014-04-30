@@ -20,13 +20,13 @@
         
         self.numberOfChunks = 3;
         
-        self.maxAsteroidsCount = 8;
-        
-        _respawnTime = 0.0f;
+        self.maxAsteroidsCount = 5;
         
         self.bigAsteroidSize = CGSizeMake(30.0f, 30.0f);
         
         self.smallAsteroidSize = CGSizeMake(15.0f, 15.0f);
+        
+        _respawnTime = 0.0f;
     }
     
     return self;
@@ -76,15 +76,16 @@
             [deadSmallAsteroids addObject:asteroid];
     }
     
-    [self.smallAsteroids removeObjectsInArray:deadSmallAsteroids];
-    
     /* Create chunks for every big asteroi */
     for(Asteroid * bigAsteroid in deadBigAsteroids)
     {
         [self addChunks:[bigAsteroid position] vel:[bigAsteroid velocity]];
     }
     
+    /* Clear */
     [self.bigAsteroids removeObjectsInArray:deadBigAsteroids];
+    
+    [self.smallAsteroids removeObjectsInArray:deadSmallAsteroids];
     
     _respawnTime += delta;
     
