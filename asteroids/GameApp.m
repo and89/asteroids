@@ -28,7 +28,7 @@
 {
     if(self = [super init])
     {
-        self.screenSize = CGSizeMake(480, 320);
+        self.screenSize = CGSizeMake(568, 320);
         
         self.player = [[Player alloc] initWithPos:CGPointMake(self.screenSize.width / 2, self.screenSize.height / 2) size:CGSizeMake(10.0f, 10.0f)];
         
@@ -65,6 +65,9 @@
     
     for(Asteroid * asteroid in allAsteroids)
     {
+        if([asteroid dead] == YES)
+            continue;
+        
         if([asteroid intersectWith:self.player])
         {
             self.gameOver = YES;
@@ -72,6 +75,9 @@
         
         for(Bullet * bullet in allBullets)
         {
+            if([bullet dead] == YES || [asteroid dead] == YES)
+                continue;
+            
             if([bullet intersectWith:asteroid])
             {
                 [asteroid setDead:YES];
@@ -82,6 +88,9 @@
     
     for(Asteroid * small in [self.asteroids smallAsteroids])
     {
+        if([small dead] == YES)
+            continue;
+        
         if([small intersectWith:self.player])
         {
             self.gameOver = YES;
@@ -89,6 +98,9 @@
         
         for(Bullet * bullet in allBullets)
         {
+            if([small dead] == YES || [bullet dead] == YES)
+                continue;
+            
             if([bullet intersectWith:small])
             {
                 [small setDead:YES];

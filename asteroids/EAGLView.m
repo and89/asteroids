@@ -10,13 +10,13 @@
 
 @implementation EAGLView
 {
-    CGFloat maximumFrameRate;
-    CGFloat minimumFrameRate;
-    CGFloat updateInterval;
-    CGFloat maxCyclesPerFrame;
+    CGFloat _maximumFrameRate;
+    CGFloat _minimumFrameRate;
+    CGFloat _updateInterval;
+    CGFloat _maxCyclesPerFrame;
     
-    double lastFrameTime;
-    double cyclesLeftOver;
+    double _lastFrameTime;
+    double _cyclesLeftOver;
 }
 
 @synthesize animating;
@@ -29,7 +29,8 @@
 }
 
 //The GL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
-- (id) initWithCoder:(NSCoder*)coder {    
+- (id) initWithCoder:(NSCoder*)coder
+{
     if ((self = [super initWithCoder:coder]))
 	{
         // Get the layer
@@ -49,13 +50,13 @@
 		animationFrameInterval = 1;
 		displayLink = nil;
         
-        maximumFrameRate = 60.0f;
-        minimumFrameRate = 10.0f;
-        updateInterval = 1.0 / maximumFrameRate;
-        maxCyclesPerFrame = maximumFrameRate / minimumFrameRate;
+        _maximumFrameRate = 60.0f;
+        _minimumFrameRate = 10.0f;
+        _updateInterval = 1.0 / _maximumFrameRate;
+        _maxCyclesPerFrame = _maximumFrameRate / _minimumFrameRate;
         
-        lastFrameTime = 0.0;
-        cyclesLeftOver = 0.0;
+        _lastFrameTime = 0.0;
+        _cyclesLeftOver = 0.0;
         
         gameApp = [GameApp sharedGameApp];
     }
@@ -71,20 +72,20 @@
     // Apple advises to use CACurrentMediaTime() as CFAbsoluteTimeGetCurrent() is synced with the mobile
 	// network time and so could change causing hiccups.
     currentTime = CACurrentMediaTime();
-    updateIterations = ((currentTime - lastFrameTime) + cyclesLeftOver);
+    updateIterations = ((currentTime - _lastFrameTime) + _cyclesLeftOver);
     
-    if(updateIterations > (maxCyclesPerFrame * updateInterval))
-        updateIterations = maxCyclesPerFrame * updateInterval;
+    if(updateIterations > (_maxCyclesPerFrame * _updateInterval))
+        updateIterations = _maxCyclesPerFrame * _updateInterval;
     
-    while(updateIterations >= updateInterval)
+    while(updateIterations >= _updateInterval)
     {
-        updateIterations -= updateInterval;
+        updateIterations -= _updateInterval;
         
-        [gameApp update:updateInterval];
+        [gameApp update:_updateInterval];
     }
     
-    cyclesLeftOver = updateIterations;
-    lastFrameTime = currentTime;
+    _cyclesLeftOver = updateIterations;
+    _lastFrameTime = currentTime;
     
     [self drawView:nil];
 }

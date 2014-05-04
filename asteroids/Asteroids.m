@@ -76,7 +76,7 @@
             [deadSmallAsteroids addObject:asteroid];
     }
     
-    /* Create chunks for every big asteroi */
+    /* Create chunks for every big asteroid */
     for(Asteroid * bigAsteroid in deadBigAsteroids)
     {
         [self addChunks:[bigAsteroid position] vel:[bigAsteroid velocity]];

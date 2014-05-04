@@ -25,6 +25,9 @@
 {
     if(self = [super initWithPos:startPos size:startSize])
     {
+        self.position = CGPointMake(startPos.x + startSize.width / 2.0f * RANDOM_MINUS_1_TO_1(),
+                                    startPos.y + startSize.height / 2.0f * RANDOM_MINUS_1_TO_1());
+        
         CGFloat randomVelX = 0.5f * RANDOM_MINUS_1_TO_1();
         CGFloat randomVelY = 0.5f * RANDOM_MINUS_1_TO_1();
         
@@ -51,16 +54,16 @@
     CGFloat radius = MAX(self.size.width, self.size.height);
     
     if(self.position.x < 0 - radius)
-        [self setPosition:CGPointMake(screenRect.width, self.position.y)];
+        [self setPosition:CGPointMake(screenRect.width + radius, self.position.y)];
     
     if(self.position.x > screenRect.width + radius)
-        [self setPosition:CGPointMake(0.0f, self.position.y)];
+        [self setPosition:CGPointMake(0.0f - radius, self.position.y)];
     
     if(self.position.y < 0 - radius)
-        [self setPosition:CGPointMake(self.position.x, screenRect.height)];
+        [self setPosition:CGPointMake(self.position.x, screenRect.height + radius)];
     
     if(self.position.y > screenRect.height + radius)
-        [self setPosition:CGPointMake(self.position.x, 0.0f)];
+        [self setPosition:CGPointMake(self.position.x, 0.0f - radius)];
 }
 
 - (void)draw:(ES1Renderer *)renderer

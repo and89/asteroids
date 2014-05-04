@@ -35,10 +35,9 @@
 
 - (void)update:(CGFloat)delta
 {
-    //TODO: refactoring!
-    
     if(!_needMove)
         return;
+    
     [super update:delta];
     
     CGVector deltaPos = CGVectorMake(_target.x - self.position.x, _target.y - self.position.y);
@@ -58,59 +57,11 @@
     
     self.angle = self.angle - 90.0f;
     
-    if(fabsf(_target.x - self.position.x) < 0.1f && fabsf(_target.y - self.position.y) < 0.1f)
+    if(fabsf(_target.x - self.position.x) < 1.0f && fabsf(_target.y - self.position.y) < 1.0f)
     {
         self.position = _target;
         _needMove = NO;
     }
-    
-    
-    
-    /*
-    float deltaX = target.x - pos.x;
-    float deltaY = target.y - pos.y;
-    float dist = DISTANCE(deltaX, deltaY);
-    
-    if(dist > 1.0f)
-    {
-        if(dist > 15.0f)
-        {
-            velocity += acceleration;
-        }
-        else
-        {
-            velocity /= deceleration;
-        }
-        pos.x = pos.x + deltaX * velocity;
-        pos.y = pos.y + deltaY * velocity;
-        deltaX /= dist;
-        deltaY /= dist;
-        angle = RADIANS_TO_DEGREES(acosf(deltaX));
-        if(deltaY < 0.0)
-            angle *= -1.0f;
-        angle -= 90.0f;
-    }
-    
-    CGSize screenSize = [[GameApp sharedGameApp] getScreenSize];
-    
-    pos.x = pos.x + deltaX * velocity;
-    pos.y = pos.y + deltaY * velocity;
-    
-    if(pos.x > screenSize.width)
-        pos.x = 0.0f;
-    if(pos.x < 0)
-        pos.x = screenSize.width;
-    if(pos.y > screenSize.height)
-        pos.y = 0.0f;
-    if(pos.y < 0)
-        pos.y = screenSize.height;
-    
-    if(fabsf(target.x - pos.x) < 0.1f && fabsf(target.y - pos.y) < 0.1f)
-    {
-        pos.x = target.x;
-        pos.y = target.y;
-        needMove = NO;
-    }*/
 }
 
 - (void)draw:(ES1Renderer *)renderer

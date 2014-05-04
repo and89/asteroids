@@ -20,11 +20,6 @@
 - (void)update:(CGFloat)delta;
 - (void)draw:(ES1Renderer *)renderer;
 
-- (void)collideAsteroids:(NSMutableArray *)asteroids withBullets:(NSMutableArray *)bullets;
-
-- (void)collidePlayerWithAsteroids:(NSMutableArray *)asteroids;
-
-
 - (void)touchesBegan:(CGPoint)location;
 - (void)touchesMoved:(CGPoint)location;
 - (void)touchesEnd:(CGPoint)location;

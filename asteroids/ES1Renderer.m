@@ -1,14 +1,12 @@
 #import "ES1Renderer.h"
 #import "GameApp.h"
-#import "Player.h"
-#import "Bullet.h"
-#import "Asteroid.h"
+#import "GameEntity.h"
 #import "Misc.h"
 
 @implementation ES1Renderer
 
 // Create an ES 1.1 context
-- (id) init
+- (id)init
 {
 	if (self = [super init])
 	{
@@ -63,25 +61,6 @@
     return YES;
 }
 
-- (void) dealloc
-{
-	// Tear down GL
-	if (defaultFramebuffer)
-	{
-		glDeleteFramebuffersOES(1, &defaultFramebuffer);
-		defaultFramebuffer = 0;
-	}
-	if (colorRenderbuffer)
-	{
-		glDeleteRenderbuffersOES(1, &colorRenderbuffer);
-		colorRenderbuffer = 0;
-	}
-	// Tear down context
-	if ([EAGLContext currentContext] == context)
-        [EAGLContext setCurrentContext:nil];
-	context = nil;
-}
-
 - (void)initOpenGL
 {
     // Switch to GL_PROJECTION matrix mode and reset the current matrix with the identity matrix
@@ -112,7 +91,7 @@
     glEnableClientState(GL_COLOR_ARRAY);
 }
 
-- (void)renderPlayer:(Player *)player
+- (void)renderPlayer:(GameEntity *)player
 {
     static const int corners = 3;
     
@@ -149,7 +128,7 @@
     glPopMatrix();
 }
 
-- (void)renderBullet:(Bullet *)bullet
+- (void)renderBullet:(GameEntity *)bullet
 {
     static const int corners = 4;
     
@@ -185,7 +164,7 @@
     glPopMatrix();
 }
 
-- (void)renderAsteroid:(Asteroid *)asteroid
+- (void)renderAsteroid:(GameEntity *)asteroid
 {
     static const int corners = 6;
     
@@ -232,20 +211,29 @@
     glPopMatrix();
 }
 
-- (void)renderRect:(CGRect)rect
+- (void)renderRect:(GameEntity *)entity
 {
     static const int corners = 4;
     
     static GLfloat vertices[corners * 2];
     
-    vertices[0] = rect.origin.x;
-    vertices[1] = rect.origin.y;
-    vertices[2] = rect.size.width;
-    vertices[3] = rect.origin.y;
-    vertices[4] = rect.size.width;
-    vertices[5] = rect.size.height;
-    vertices[6] = rect.origin.x;
-    vertices[7] = rect.size.height;
+    CGFloat x = [entity position].x;
+    CGFloat y = [entity position].y;
+    
+    CGFloat width = [entity size].width;
+    CGFloat height = [entity size].height;
+    
+    vertices[0] = x - width / 2.0f;
+    vertices[1] = y - height / 2.0f;
+    
+    vertices[2] = x + width / 2.0f;
+    vertices[3] = y - height / 2.0f;
+    
+    vertices[4] = x + width / 2.0f;
+    vertices[5] = y + height / 2.0f;
+    
+    vertices[6] = x - width / 2.0f;
+    vertices[7] = y + height / 2.0f;
     
     static const GLubyte colors[corners * 4] = {
         255, 255, 255, 255,
@@ -266,6 +254,53 @@
     glLineWidth(1.0f);
     glDrawElements(GL_LINE_LOOP, corners, GL_UNSIGNED_BYTE, indices);
     glPopMatrix();
+}
+
+- (void)renderLine:(GameEntity *)chunk
+{
+    static GLfloat vertices[2] = {
+        0.0f, 1.0f,
+    };
+    
+    static const GLubyte colours[8] = {
+        255, 100, 100, 255,
+        255, 100, 100, 255,
+    };
+    
+    static const GLubyte indices[1] = {
+        0,
+    };
+    
+    glPushMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glTranslatef([chunk position].x, [chunk position].y, 0.0f);
+    glRotatef([chunk angle], 0.0f, 0.0f, 1.0f);
+    glScalef([chunk size].width, [chunk size].height, 1.0f);
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glColorPointer(4, GL_UNSIGNED_BYTE, 0, colours);
+    glLineWidth(1.0f);
+    glDrawElements(GL_LINES, 1, GL_UNSIGNED_BYTE, indices);
+    glPopMatrix();
+}
+
+- (void) dealloc
+{
+	// Tear down GL
+	if (defaultFramebuffer)
+	{
+		glDeleteFramebuffersOES(1, &defaultFramebuffer);
+		defaultFramebuffer = 0;
+	}
+	if (colorRenderbuffer)
+	{
+		glDeleteRenderbuffersOES(1, &colorRenderbuffer);
+		colorRenderbuffer = 0;
+	}
+	// Tear down context
+	if ([EAGLContext currentContext] == context)
+        [EAGLContext setCurrentContext:nil];
+	context = nil;
 }
 
 @end

@@ -1,9 +1,7 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-@class Player;
-@class Bullet;
-@class Asteroid;
+@class GameEntity;
 
 @interface ES1Renderer : NSObject
 {
@@ -20,12 +18,10 @@
 - (void)render;
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;
 
-- (void)renderPlayer:(Player *)player;
-
-- (void)renderBullet:(Bullet *)bullet;
-
-- (void)renderAsteroid:(Asteroid *)asteroid;
-
-- (void)renderRect:(CGRect)rect;
+- (void)renderPlayer:(GameEntity *)player;
+- (void)renderBullet:(GameEntity *)bullet;
+- (void)renderAsteroid:(GameEntity *)asteroid;
+- (void)renderRect:(GameEntity *)entity;
+- (void)renderLine:(GameEntity *)chunk;
 
 @end

@@ -52,7 +52,7 @@
 }
 
 - (BOOL)intersectWith:(GameEntity *)otherEntity
-{
+{    
     CGFloat r = MAX(_size.width, _size.height);
 
     CGPoint otherPos = [otherEntity position];
