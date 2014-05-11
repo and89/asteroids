@@ -38,6 +38,8 @@
         
         self.gameOver = NO;
         
+        self.score = 0;
+        
         srandomdev();
     }
     
@@ -53,17 +55,20 @@
 
 - (void)update:(CGFloat)delta
 {
+    if(self.gameOver == YES)
+    {
+        
+    }
+    
     [self.asteroids update:delta];
     
     [self.bullets update:delta];
     
     [self.player update:delta];
     
-    NSMutableArray * allAsteroids = [self.asteroids bigAsteroids];
-    
     NSMutableArray * allBullets = [self.bullets bullets];
     
-    for(Asteroid * asteroid in allAsteroids)
+    for(Asteroid * asteroid in [self.asteroids bigAsteroids])
     {
         if([asteroid dead] == YES)
             continue;
@@ -82,6 +87,7 @@
             {
                 [asteroid setDead:YES];
                 [bullet setDead:YES];
+                self.score += 10;
             }
         }
     }
@@ -105,6 +111,7 @@
             {
                 [small setDead:YES];
                 [bullet setDead:YES];
+                self.score += 20;
             }
         }
     }

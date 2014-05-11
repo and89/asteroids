@@ -21,6 +21,8 @@
     CFTimeInterval lastTime;
     
     GameApp * gameApp;
+    
+    __weak IBOutlet UILabel * scoreLabel;
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;

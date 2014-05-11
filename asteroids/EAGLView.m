@@ -82,6 +82,8 @@
         updateIterations -= _updateInterval;
         
         [gameApp update:_updateInterval];
+        
+        [scoreLabel setText:[NSString stringWithFormat:@"score: %u", [gameApp score]]];
     }
     
     _cyclesLeftOver = updateIterations;
@@ -97,6 +99,7 @@
 
 - (void) layoutSubviews
 {
+    [super layoutSubviews];
 	[renderer resizeFromLayer:(CAEAGLLayer*)self.layer];
     [self drawView:nil];
 }

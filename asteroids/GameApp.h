@@ -15,6 +15,8 @@
 
 @property (nonatomic, readwrite, assign) BOOL gameOver;
 
+@property (nonatomic, readwrite, assign) NSUInteger score;
+
 + (instancetype)sharedGameApp;
 
 - (void)update:(CGFloat)delta;
