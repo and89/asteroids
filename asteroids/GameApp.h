@@ -15,7 +15,7 @@
 
 @property (nonatomic, readwrite, assign) BOOL gameOver;
 
-+ (id)sharedGameApp;
++ (instancetype)sharedGameApp;
 
 - (void)update:(CGFloat)delta;
 - (void)draw:(ES1Renderer *)renderer;

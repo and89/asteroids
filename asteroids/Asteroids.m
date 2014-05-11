@@ -20,7 +20,7 @@
         
         self.numberOfChunks = 3;
         
-        self.maxAsteroidsCount = 5;
+        self.maxAsteroidsCount = 105;
         
         self.bigAsteroidSize = CGSizeMake(30.0f, 30.0f);
         
@@ -59,28 +59,22 @@
     NSMutableArray * deadBigAsteroids = [[NSMutableArray alloc] init];
     
     NSMutableArray * deadSmallAsteroids = [[NSMutableArray alloc] init];
-    
-    for(Asteroid * asteroid in self.bigAsteroids)
-    {
+
+    [self.bigAsteroids enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(Asteroid * asteroid, NSUInteger idx, BOOL * stop) {
         [asteroid update:delta];
-        
-        if([asteroid dead])
+        if([asteroid dead] == YES)
             [deadBigAsteroids addObject:asteroid];
-    }
+    }];
     
-    for(Asteroid * asteroid in self.smallAsteroids)
-    {
+    [self.smallAsteroids enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(Asteroid * asteroid, NSUInteger idx, BOOL * stop) {
         [asteroid update:delta];
-        
-        if([asteroid dead])
+        if([asteroid dead] == YES)
             [deadSmallAsteroids addObject:asteroid];
-    }
+    }];
     
-    /* Create chunks for every big asteroid */
-    for(Asteroid * bigAsteroid in deadBigAsteroids)
-    {
-        [self addChunks:[bigAsteroid position] vel:[bigAsteroid velocity]];
-    }
+    [deadBigAsteroids enumerateObjectsUsingBlock:^(Asteroid * asteroid, NSUInteger idx, BOOL * stop) {
+        [self addChunks:[asteroid position] vel:[asteroid velocity]];
+    }];
     
     /* Clear */
     [self.bigAsteroids removeObjectsInArray:deadBigAsteroids];

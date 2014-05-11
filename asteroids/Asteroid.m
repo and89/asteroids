@@ -7,7 +7,7 @@
 {
 }
 
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize
+- (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize
 {
     if(self = [super initWithPos:startPos size:startSize])
     {
@@ -21,7 +21,7 @@
     return self;
 }
 
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel
+- (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel
 {
     if(self = [super initWithPos:startPos size:startSize])
     {
@@ -68,6 +68,8 @@
 
 - (void)draw:(ES1Renderer *)renderer
 {
+    [super draw:renderer];
+    
     [renderer renderAsteroid:self];
 }
 

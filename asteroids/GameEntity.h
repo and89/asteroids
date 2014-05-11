@@ -17,11 +17,11 @@
 @property (nonatomic, readwrite, assign) BOOL dead;
 
 /* Initializers */
-- (id)initWithPos:(CGPoint)startPos;
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize;
-- (id)initWithPos:(CGPoint)startPos vel:(CGVector)startVel;
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel;
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel ang:(CGFloat)startAngle;
+- (instancetype)initWithPos:(CGPoint)startPos;
+- (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize;
+- (instancetype)initWithPos:(CGPoint)startPos vel:(CGVector)startVel;
+- (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel;
+- (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel ang:(CGFloat)startAngle;
 
 - (void)update:(CGFloat)delta;
 - (void)draw:(ES1Renderer *)renderer;

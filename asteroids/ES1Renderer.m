@@ -256,7 +256,7 @@
     glPopMatrix();
 }
 
-- (void)renderLine:(GameEntity *)chunk
+- (void)renderLine:(GameEntity *)entity
 {
     static GLfloat vertices[2] = {
         0.0f, 1.0f,
@@ -274,14 +274,19 @@
     glPushMatrix();
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef([chunk position].x, [chunk position].y, 0.0f);
-    glRotatef([chunk angle], 0.0f, 0.0f, 1.0f);
-    glScalef([chunk size].width, [chunk size].height, 1.0f);
+    glTranslatef([entity position].x, [entity position].y, 0.0f);
+    glRotatef([entity angle], 0.0f, 0.0f, 1.0f);
+    glScalef([entity size].width, [entity size].height, 1.0f);
     glVertexPointer(2, GL_FLOAT, 0, vertices);
     glColorPointer(4, GL_UNSIGNED_BYTE, 0, colours);
     glLineWidth(1.0f);
     glDrawElements(GL_LINES, 1, GL_UNSIGNED_BYTE, indices);
     glPopMatrix();
+}
+
+- (void)renderCircle:(GameEntity *)entity
+{
+    
 }
 
 - (void) dealloc

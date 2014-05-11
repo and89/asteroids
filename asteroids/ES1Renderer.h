@@ -22,6 +22,7 @@
 - (void)renderBullet:(GameEntity *)bullet;
 - (void)renderAsteroid:(GameEntity *)asteroid;
 - (void)renderRect:(GameEntity *)entity;
-- (void)renderLine:(GameEntity *)chunk;
+- (void)renderLine:(GameEntity *)entity;
+- (void)renderCircle:(GameEntity *)entity;
 
 @end

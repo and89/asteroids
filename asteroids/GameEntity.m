@@ -5,27 +5,27 @@
 {
 }
 
-- (id)initWithPos:(CGPoint)startPos
+- (instancetype)initWithPos:(CGPoint)startPos
 {
     return [self initWithPos:startPos size:CGSizeMake(0.0f, 0.0f) vel:CGVectorMake(0.0f, 0.0f) ang:0.0f];
 }
 
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize
+- (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize
 {
     return [self initWithPos:startPos size:startSize vel:CGVectorMake(0.0f, 0.0f) ang:0.0f];
 }
 
-- (id)initWithPos:(CGPoint)startPos vel:(CGVector)startVel
+- (instancetype)initWithPos:(CGPoint)startPos vel:(CGVector)startVel
 {
     return [self initWithPos:startPos size:CGSizeMake(0.0f, 0.0f) vel:startVel ang:0.0f];
 }
 
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel
+- (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel
 {
     return [self initWithPos:startPos size:startSize vel:startVel ang:0.0f];
 }
 
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel ang:(CGFloat)startAngle
+- (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel ang:(CGFloat)startAngle
 {
     if(self = [super init])
     {
@@ -49,6 +49,7 @@
 
 - (void)draw:(ES1Renderer *)renderer
 {
+    [renderer renderCircle:self];
 }
 
 - (BOOL)intersectWith:(GameEntity *)otherEntity

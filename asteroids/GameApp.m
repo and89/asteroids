@@ -11,7 +11,7 @@
 {
 }
 
-+ (id)sharedGameApp
++ (instancetype)sharedGameApp
 {
     static GameApp * app;
     

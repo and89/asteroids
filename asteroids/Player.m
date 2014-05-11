@@ -16,7 +16,7 @@
     BOOL _needMove;
 }
 
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize
+- (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize
 {
     if(self = [super initWithPos:startPos size:startSize])
     {
@@ -66,6 +66,8 @@
 
 - (void)draw:(ES1Renderer *)renderer
 {
+    [super draw:renderer];
+    
     [renderer renderPlayer:self];
 }
 

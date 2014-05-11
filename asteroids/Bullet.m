@@ -5,7 +5,7 @@
 {
 }
 
-- (id)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel
+- (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel
 {
     if(self = [super initWithPos:startPos size:startSize vel:startVel])
     {
@@ -22,6 +22,8 @@
 
 - (void)draw:(ES1Renderer *)renderer
 {
+    [ super draw:renderer];
+    
     [renderer renderBullet:self];
 }
 
