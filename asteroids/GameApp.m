@@ -1,14 +1,30 @@
 #import "GameApp.h"
-#import "Player.h"
-#import "Bullet.h"
-#import "Bullets.h"
-#import "Asteroid.h"
-#import "Asteroids.h"
-#import "ES1Renderer.h"
+#import "GameScene.h"
+#import "MainMenuScene.h"
 #include <dispatch/dispatch.h>
+
+
+
+@interface GameApp (Private)
+
+- (void)mainLoop;
+
+@end
 
 @implementation GameApp
 {
+    BOOL _animating;
+    NSInteger _animationFrameInterval;
+    id _displayLink;
+    CFTimeInterval _lastTime;
+    
+    CGFloat _maximumFrameRate;
+    CGFloat _minimumFrameRate;
+    CGFloat _updateInterval;
+    CGFloat _maxCyclesPerFrame;
+    
+    double _lastFrameTime;
+    double _cyclesLeftOver;
 }
 
 + (instancetype)sharedGameApp
@@ -28,17 +44,21 @@
 {
     if(self = [super init])
     {
+        _animating = FALSE;
+        _animationFrameInterval = 1;
+        _displayLink = nil;
+        _maximumFrameRate = 60.0f;
+        _minimumFrameRate = 10.0f;
+        _updateInterval = 1.0 / _maximumFrameRate;
+        _maxCyclesPerFrame = _maximumFrameRate / _minimumFrameRate;
+        _lastFrameTime = 0.0;
+        _cyclesLeftOver = 0.0;
+        
         self.screenSize = CGSizeMake(568, 320);
         
-        self.player = [[Player alloc] initWithPos:CGPointMake(self.screenSize.width / 2, self.screenSize.height / 2) size:CGSizeMake(10.0f, 10.0f)];
+        self.currentScene = [[MainMenuScene alloc] initWithSize:self.screenSize andResult:YES];
         
-        self.bullets = [[Bullets alloc] init];
-        
-        self.asteroids = [[Asteroids alloc] init];
-        
-        self.gameOver = NO;
-        
-        self.score = 0;
+        self.state = kGameMenuState;
         
         srandomdev();
     }
@@ -46,84 +66,88 @@
     return self;
 }
 
-- (void)fire
+- (void)setAnimationFrameInterval:(NSInteger)frameInterval
 {
-    CGFloat angle = [self.player angle];
-    CGPoint pos = [self.player position];
-    [self.bullets addBullet:pos andAngle:-angle];
+    // Frame interval defines how many display frames must pass between each time the
+	// display link fires. The display link will only fire 30 times a second when the
+	// frame internal is two on a display that refreshes 60 times a second. The default
+	// frame interval setting of one will fire 60 times a second when the display refreshes
+	// at 60 times a second. A frame interval setting of less than one results in undefined
+	// behavior.
+	if (frameInterval >= 1)
+	{
+		_animationFrameInterval = frameInterval;
+		
+		if (_animating)
+		{
+			[self stop];
+			[self run];
+		}
+	}
 }
 
-- (void)update:(CGFloat)delta
+- (void)run
 {
-    if(self.gameOver == YES)
-    {
+    if (!_animating)
+	{
+        // CADisplayLink is API new to iPhone SDK 3.1. Compiling against earlier versions will result in a warning, but can be dismissed
+        // if the system version runtime check for CADisplayLink exists in -initWithCoder:. The runtime check ensures this code will
+        // not be called in system versions earlier than 3.1.
         
-    }
-    
-    [self.asteroids update:delta];
-    
-    [self.bullets update:delta];
-    
-    [self.player update:delta];
-    
-    NSMutableArray * allBullets = [self.bullets bullets];
-    
-    for(Asteroid * asteroid in [self.asteroids bigAsteroids])
-    {
-        if([asteroid dead] == YES)
-            continue;
+        _displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop)];
         
-        if([asteroid intersectWith:self.player])
-        {
-            self.gameOver = YES;
-        }
+        [_displayLink setFrameInterval:_animationFrameInterval];
         
-        for(Bullet * bullet in allBullets)
-        {
-            if([bullet dead] == YES || [asteroid dead] == YES)
-                continue;
-            
-            if([bullet intersectWith:asteroid])
-            {
-                [asteroid setDead:YES];
-                [bullet setDead:YES];
-                self.score += 10;
-            }
-        }
-    }
-    
-    for(Asteroid * small in [self.asteroids smallAsteroids])
-    {
-        if([small dead] == YES)
-            continue;
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+		
+		_animating = TRUE;
         
-        if([small intersectWith:self.player])
-        {
-            self.gameOver = YES;
-        }
-        
-        for(Bullet * bullet in allBullets)
-        {
-            if([small dead] == YES || [bullet dead] == YES)
-                continue;
-            
-            if([bullet intersectWith:small])
-            {
-                [small setDead:YES];
-                [bullet setDead:YES];
-                self.score += 20;
-            }
-        }
-    }
+        _lastTime = CFAbsoluteTimeGetCurrent();
+	}
 }
 
-- (void)draw:(ES1Renderer *)renderer
+- (void)stop
 {
-    [self.asteroids draw:renderer];
+    if (_animating)
+	{
+        [_displayLink invalidate];
+        _displayLink = nil;
+		_animating = FALSE;
+	}
+}
+
+- (void)mainLoop
+{
+    double currentTime;
+    double updateIterations;
     
-    [self.bullets draw:renderer];
+    // Apple advises to use CACurrentMediaTime() as CFAbsoluteTimeGetCurrent() is synced with the mobile
+	// network time and so could change causing hiccups.
+    currentTime = CACurrentMediaTime();
+    updateIterations = ((currentTime - _lastFrameTime) + _cyclesLeftOver);
     
-    [self.player draw:renderer];
+    if(updateIterations > (_maxCyclesPerFrame * _updateInterval))
+        updateIterations = _maxCyclesPerFrame * _updateInterval;
+    
+    while(updateIterations >= _updateInterval)
+    {
+        updateIterations -= _updateInterval;
+        
+        /* Update the game */
+        [self.currentScene update:_updateInterval];
+        [self.controller updateScore];
+    }
+    
+    _cyclesLeftOver = updateIterations;
+    _lastFrameTime = currentTime;
+    
+    /* Draw the game */
+    
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    [self.currentScene draw];
+    
+    [self.glView swapBuffers];
 }
 
 - (CGPoint)adjustTouchOrientationForTouch:(CGPoint)aTouch
@@ -138,19 +162,62 @@
 - (void)touchesBegan:(CGPoint)location
 {
     CGPoint loc = [self adjustTouchOrientationForTouch:location];
-    [self.player touchesBegan:loc];
+    
+    [self.currentScene touchesBegan:loc];
 }
 
 - (void)touchesMoved:(CGPoint)location
 {
     CGPoint loc = [self adjustTouchOrientationForTouch:location];
-    [self.player touchesMoved:loc];
+    
+    [self.currentScene touchesMoved:loc];
 }
 
 - (void)touchesEnd:(CGPoint)location
 {
     CGPoint loc = [self adjustTouchOrientationForTouch:location];
-    [self.player touchesEnd:loc];
+
+    [self.currentScene touchesEnd:loc];
+}
+
+- (void)increaseScore:(NSUInteger)value
+{
+    self.score += value;
+}
+
+- (void)resetScore
+{
+    self.score = 0;
+}
+
+- (void)updateState:(GameState)toState
+{
+    if(self.state != toState)
+    {
+        self.currentScene = nil;
+        
+        if(toState == kGamePlayState)
+        {
+            self.currentScene = [[GameScene alloc] initWithSize:self.screenSize];
+        }
+        else if(toState == kGameOverState)
+        {
+            self.currentScene = [[MainMenuScene alloc] initWithSize:self.screenSize andResult:NO];
+            [self resetScore];
+            [self.controller goToMainMenu];
+        }
+        else if(toState == kGameMenuState)
+        {
+            self.currentScene = [[MainMenuScene alloc] initWithSize:self.screenSize andResult:YES];
+        }
+        
+        self.state = toState;
+    }
+}
+
+- (void)dealloc
+{
+    self.currentScene = nil;
 }
 
 @end

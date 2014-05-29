@@ -1,11 +1,8 @@
 #import "Asteroid.h"
 #import "GameApp.h"
-#import "ES1Renderer.h"
 #import "Misc.h"
 
 @implementation Asteroid
-{
-}
 
 - (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize
 {
@@ -66,11 +63,53 @@
         [self setPosition:CGPointMake(self.position.x, 0.0f - radius)];
 }
 
-- (void)draw:(ES1Renderer *)renderer
+- (void)draw
 {
-    [super draw:renderer];
+    [super draw];
     
-    [renderer renderAsteroid:self];
+    static const int corners = 6;
+    
+    static GLfloat vertices[corners * 2];
+    
+    static const GLubyte colors[corners * 4] = {
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+        255, 255, 255, 255,
+    };
+    
+    static GLubyte indices[corners];
+    
+    static BOOL verticesInited = NO;
+    
+    if(!verticesInited)
+    {
+        float angle = 0.0f;
+        for(unsigned int i=0; i<corners; ++i)
+        {
+            vertices[i * 2] = cosf(angle);
+            vertices[i * 2 + 1] = sinf(angle);
+            indices[i] = i;
+            angle += 2.0 * M_PI / corners;
+        }
+        verticesInited = YES;
+    }
+    
+    glPushMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    glTranslatef(self.position.x, self.position.y, 0.0f);
+    glRotatef(self.angle, 0.0f, 0.0f, 1.0f);
+    glScalef(self.size.width, self.size.height, 1.0f);
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
+    glLineWidth(2.0f);
+    glDrawElements(GL_LINE_LOOP, corners, GL_UNSIGNED_BYTE, indices);
+    
+    glPopMatrix();
 }
 
 @end

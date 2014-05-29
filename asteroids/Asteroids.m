@@ -91,17 +91,23 @@
     }
 }
 
-- (void)draw:(ES1Renderer *)renderer
+- (void)draw
 {
     for(Asteroid * bigAsteroid in self.bigAsteroids)
     {
-        [bigAsteroid draw:renderer];
+        [bigAsteroid draw];
     }
     
     for (Asteroid * smallAsteroid in self.smallAsteroids)
     {
-        [smallAsteroid draw:renderer];
+        [smallAsteroid draw];
     }
+}
+
+- (void)dealloc
+{
+    self.bigAsteroids = nil;
+    self.smallAsteroids = nil;
 }
 
 @end

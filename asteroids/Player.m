@@ -1,7 +1,6 @@
 #import "Player.h"
 #import "GameApp.h"
 #import "Misc.h"
-#import "ES1Renderer.h"
 
 @implementation Player
 {
@@ -64,11 +63,42 @@
     }
 }
 
-- (void)draw:(ES1Renderer *)renderer
+- (void)draw
 {
-    [super draw:renderer];
+    [super draw];
     
-    [renderer renderPlayer:self];
+    static const int corners = 3;
+    
+    static const GLfloat vertices[corners * 2] = {
+        -1.0f, -1.0f,
+        0.0f, 1.0f,
+        1.0f, -1.0f,
+    };
+    
+    static const GLubyte colors[corners * 2 * 4] = {
+        200, 50, 50, 255,
+        200, 200, 50, 255,
+        200, 50, 50, 255,
+    };
+    
+    static const GLubyte indices[corners] = {
+        0, 1, 2
+    };
+    
+    glPushMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    glTranslatef(self.position.x, self.position.y, 0.0f);
+    glRotatef(self.angle, 0.0f, 0.0f, 1.0f);
+    glScalef(self.size.width, self.size.height, 1.0f);
+    
+    glVertexPointer(2, GL_FLOAT, 0, vertices);
+    glColorPointer(4, GL_UNSIGNED_BYTE, 0, colors);
+    glLineWidth(2.0f);
+    glDrawElements(GL_LINE_LOOP, corners, GL_UNSIGNED_BYTE, indices);
+    
+    glPopMatrix();
 }
 
 - (void)touchesBegan:(CGPoint)location
@@ -96,10 +126,6 @@
         _needMove = YES;
         
         _isMove = NO;
-    }
-    else
-    {
-        [[GameApp sharedGameApp] fire];
     }
 }
 

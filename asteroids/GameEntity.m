@@ -2,8 +2,6 @@
 #import "ES1Renderer.h"
 
 @implementation GameEntity
-{
-}
 
 - (instancetype)initWithPos:(CGPoint)startPos
 {
@@ -47,9 +45,8 @@
     _position.y += _velocity.dy * _accelerate;
 }
 
-- (void)draw:(ES1Renderer *)renderer
+- (void)draw
 {
-    [renderer renderCircle:self];
 }
 
 - (BOOL)intersectWith:(GameEntity *)otherEntity

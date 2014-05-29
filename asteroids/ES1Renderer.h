@@ -1,12 +1,8 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-@class GameEntity;
-
 @interface ES1Renderer : NSObject
 {
-	EAGLContext * context;
-	
 	// The pixel dimensions of the CAEAGLLayer
 	GLint backingWidth;
 	GLint backingHeight;
@@ -15,14 +11,10 @@
 	GLuint defaultFramebuffer, colorRenderbuffer;
 }
 
-- (void)render;
+@property (nonatomic, readonly, strong) EAGLContext * context;
+
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;
 
-- (void)renderPlayer:(GameEntity *)player;
-- (void)renderBullet:(GameEntity *)bullet;
-- (void)renderAsteroid:(GameEntity *)asteroid;
-- (void)renderRect:(GameEntity *)entity;
-- (void)renderLine:(GameEntity *)entity;
-- (void)renderCircle:(GameEntity *)entity;
+- (CGSize)getScreenSize;
 
 @end

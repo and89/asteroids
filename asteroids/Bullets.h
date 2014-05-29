@@ -1,5 +1,3 @@
-@class ES1Renderer;
-
 @interface Bullets : NSObject
 
 @property (nonatomic, readwrite, strong) NSMutableArray * bullets;
@@ -13,6 +11,6 @@
 - (void)addBullet:(CGPoint)pos andAngle:(CGFloat)angle;
 
 - (void)update:(CGFloat)delta;
-- (void)draw:(ES1Renderer *)renderer;
+- (void)draw;
 
 @end

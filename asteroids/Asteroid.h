@@ -1,7 +1,5 @@
 #import "GameEntity.h"
 
-@class ES1Renderer;
-
 @interface Asteroid : GameEntity
 
 /* Angular velocity */
@@ -14,6 +12,6 @@
 - (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel;
 
 - (void)update:(CGFloat)delta;
-- (void)draw:(ES1Renderer *)renderer;
+- (void)draw;
 
 @end

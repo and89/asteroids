@@ -1,7 +1,7 @@
 #import "Misc.h"
+#import <OpenGLES/ES1/gl.h>
 
-@class ES1Renderer;
-
+/* The base class for all game objects such as spaceship, asteroids, bullets, etc */
 @interface GameEntity : NSObject
 
 @property (nonatomic, readwrite, assign) CGPoint position;
@@ -24,7 +24,7 @@
 - (instancetype)initWithPos:(CGPoint)startPos size:(CGSize)startSize vel:(CGVector)startVel ang:(CGFloat)startAngle;
 
 - (void)update:(CGFloat)delta;
-- (void)draw:(ES1Renderer *)renderer;
+- (void)draw;
 
 - (BOOL)intersectWith:(GameEntity *)otherEntity;
 

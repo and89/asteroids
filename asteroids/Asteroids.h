@@ -1,4 +1,3 @@
-@class ES1Renderer;
 @class Asteroid;
 
 @interface Asteroids : NSObject
@@ -22,6 +21,6 @@
 - (void)addBigAsteroid;
 
 - (void)update:(CGFloat)delta;
-- (void)draw:(ES1Renderer *)renderer;
+- (void)draw;
 
 @end

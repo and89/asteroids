@@ -4,8 +4,6 @@
 #import "Misc.h"
 
 @implementation Bullets
-{
-}
 
 - (id)init
 {
@@ -53,12 +51,17 @@
 
 }
 
-- (void)draw:(ES1Renderer *)renderer
+- (void)draw
 {
     for(Bullet * bullet in self.bullets)
     {
-        [bullet draw:renderer];
+        [bullet draw];
     }
+}
+
+- (void)dealloc
+{
+    self.bullets = nil;
 }
 
 @end
