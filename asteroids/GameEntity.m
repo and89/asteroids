@@ -1,5 +1,4 @@
 #import "GameEntity.h"
-#import "ES1Renderer.h"
 
 @implementation GameEntity
 
@@ -27,12 +26,12 @@
 {
     if(self = [super init])
     {
-        _position = startPos;
-        _size = startSize;
-        _velocity = startVel;
-        _accelerate = 1.0f;
-        _angle = startAngle;
-        _dead = NO;
+        self.position = startPos;
+        self.size = startSize;
+        self.velocity = startVel;
+        self.accelerate = 1.0f;
+        self.angle = startAngle;
+        self.dead = NO;
     }
     
     return self;
@@ -57,9 +56,10 @@
     
     CGFloat otherR = MAX([otherEntity size].width, [otherEntity size].height);
     
-    if(fabsf(_position.x - otherPos.x) > (r + otherR))
+    if(fabsf(self.position.x - otherPos.x) > (r + otherR))
         return NO;
-    if(fabsf(_position.y - otherPos.y) > (r + otherR))
+    
+    if(fabsf(self.position.y - otherPos.y) > (r + otherR))
         return NO;
     
     return YES;

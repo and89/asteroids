@@ -153,12 +153,12 @@
 				A15FBDB218F25A970028CDAE /* EAGLView.m */,
 				A15FBDB318F25A970028CDAE /* ES1Renderer.h */,
 				A15FBDB418F25A970028CDAE /* ES1Renderer.m */,
-				A15FBD8B18F259A50028CDAE /* Main_iPhone.storyboard */,
-				A15FBD8E18F259A50028CDAE /* Main_iPad.storyboard */,
 				A15FBD9118F259A50028CDAE /* ViewController.h */,
 				A15FBD9218F259A50028CDAE /* ViewController.m */,
 				A15FBD8818F259A50028CDAE /* AppDelegate.h */,
 				A15FBD8918F259A50028CDAE /* AppDelegate.m */,
+				A15FBD8E18F259A50028CDAE /* Main_iPad.storyboard */,
+				A15FBD8B18F259A50028CDAE /* Main_iPhone.storyboard */,
 			);
 			name = Classes;
 			path = asteroids;

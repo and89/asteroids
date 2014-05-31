@@ -46,11 +46,12 @@
         {
             [self.player setDead:YES];
             [[GameApp sharedGameApp] updateState:kGameOverState];
+            break;
         }
         
         for(Bullet * bullet in allBullets)
         {
-            if([bullet dead] == YES || [asteroid dead] == YES)
+            if([bullet dead] == YES)
                 continue;
             
             if([bullet intersectWith:asteroid])
@@ -71,11 +72,12 @@
         {
             [self.player setDead:YES];
             [[GameApp sharedGameApp] updateState:kGameOverState];
+            break;
         }
         
         for(Bullet * bullet in allBullets)
         {
-            if([small dead] == YES || [bullet dead] == YES)
+            if([small dead] == YES)
                 continue;
             
             if([bullet intersectWith:small])

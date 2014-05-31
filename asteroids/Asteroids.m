@@ -98,7 +98,7 @@
         [bigAsteroid draw];
     }
     
-    for (Asteroid * smallAsteroid in self.smallAsteroids)
+    for(Asteroid * smallAsteroid in self.smallAsteroids)
     {
         [smallAsteroid draw];
     }

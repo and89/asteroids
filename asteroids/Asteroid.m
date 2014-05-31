@@ -11,8 +11,6 @@
         self.velocity = CGVectorMake(1.0f * RANDOM_MINUS_1_TO_1(), 1.0f * RANDOM_MINUS_1_TO_1());
         
         self.angVelocity = 5.0f * RANDOM_MINUS_1_TO_1();
-        
-        self.dead = NO;
     }
     
     return self;
@@ -33,8 +31,6 @@
         self.velocity = newVelocity;
         
         self.angVelocity = 1.0f * RANDOM_MINUS_1_TO_1();
-        
-        self.dead = NO;
     }
     
     return self;

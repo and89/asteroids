@@ -198,12 +198,12 @@
         
         if(toState == kGamePlayState)
         {
+            [self resetScore];
             self.currentScene = [[GameScene alloc] initWithSize:self.screenSize];
         }
         else if(toState == kGameOverState)
         {
             self.currentScene = [[MainMenuScene alloc] initWithSize:self.screenSize andResult:NO];
-            [self resetScore];
             [self.controller goToMainMenu];
         }
         else if(toState == kGameMenuState)
