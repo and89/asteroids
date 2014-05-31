@@ -56,7 +56,7 @@
         
         self.screenSize = CGSizeMake(568, 320);
         
-        self.currentScene = [[MainMenuScene alloc] initWithSize:self.screenSize andResult:YES];
+        self.currentScene = [[MainMenuScene alloc] initWithSize:self.screenSize];
         
         self.state = kGameMenuState;
         
@@ -203,12 +203,12 @@
         }
         else if(toState == kGameOverState)
         {
-            self.currentScene = [[MainMenuScene alloc] initWithSize:self.screenSize andResult:NO];
+            self.currentScene = [[MainMenuScene alloc] initWithSize:self.screenSize];
             [self.controller goToMainMenu];
         }
         else if(toState == kGameMenuState)
         {
-            self.currentScene = [[MainMenuScene alloc] initWithSize:self.screenSize andResult:YES];
+            self.currentScene = [[MainMenuScene alloc] initWithSize:self.screenSize];
         }
         
         self.state = toState;
